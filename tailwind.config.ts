@@ -9,9 +9,19 @@ export default {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			sans: ["Calibri", "Arial", "sans-serif"], // Calibri as the primary font
+		  },
   		colors: {
+			
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			custom: {
+				purple1: "#290849", // rgb(41,8,73)
+				purple2: "#55185D", // rgb(55,24,93)
+				yellow1: "#FFD524", // rgb(255,213,36)
+				yellow2: "#ECB602", // rgb(236,182,2)
+			},
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
