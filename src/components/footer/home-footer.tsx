@@ -1,4 +1,5 @@
 import React from 'react'
+import { FooterLogo } from '../../../public/icons/logo.svg'
 
 type Props = {}
 
@@ -13,7 +14,9 @@ const HomeFooter = (props: Props) => {
           {/* First row column one */}
           <div>
             {/* Footer logo */}
-            <div></div>
+            <div>
+              <img src='../' alt='MusoMania footer logo' />
+            </div>
             {/* Footer action buttons */}
             <div></div>
             {/* Footer social icons */}
