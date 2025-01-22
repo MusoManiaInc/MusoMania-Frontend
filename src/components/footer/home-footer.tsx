@@ -1,5 +1,4 @@
 import React from 'react'
-import { FooterLogo } from '../../../public/icons/logo.svg'
 
 type Props = {}
 
@@ -12,23 +11,35 @@ const HomeFooter = (props: Props) => {
         {/* First row */}
         <div className='flex justify-between'>
           {/* First row column one */}
-          <div>
+          <div className='flex flex-col gap-4'>
             {/* Footer logo */}
             <div>
-              <img src='../' alt='MusoMania footer logo' />
+              {/* Logo container */}
+              <a className='flex items-center' href='/'>
+                <div>
+                  <img className='h-24' src="/icons/MusaManiaMonday.svg" alt='MusoMania footer logo' style={{ marginLeft: '-20%' }} />
+                </div>
+                <div className="font-bold" style={{ marginLeft: '-20%' }}>
+                  <h1 className='text-lg'>MusoMania</h1>
+                </div>
+              </a>
             </div>
             {/* Footer action buttons */}
-            <div></div>
-            {/* Footer social icons */}
-            <div></div>
+            <div>
+              {/* Footer action buttons container */}
+              <div className='flex gap-4'>
+                <a href='/sign-up' className="bg-custom-purple2 text-white px-6 py-3 rounded-full hover:bg-custom-purple1 transition-all font-bold">Get Started</a>
+                <a href='/about' className="px-6 py-3 rounded-full hover:bg-gray-100 transition-all border border-black">Learn More</a>
+              </div>
+            </div>
           </div>
           {/* First row column two */}
           <div>
             {/* Footer nav */}
-            <div className='flex flex-col justify-between gap-4'>
+            <div className='flex flex-col justify-between space-y-4 justify-items-end'>
               <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal"  href='/about' target='_blank'>About</a>
               <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/contact' target='_blank'>Contact Us</a>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/faq' target='_blank'>Frequently Asked Questions</a>
+              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/faq' target='_blank'>FAQ</a>
               <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/careers' target='_blank'>Working at MusoMania</a>
             </div>
           </div>
