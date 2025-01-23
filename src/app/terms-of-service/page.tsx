@@ -14,8 +14,8 @@ export default function TermsOfService() {
               </div>
               {/* Second row */}
               <div className="flex flex-col gap-4">
-                <p className="font-bold">Welcome to MusoMania ("MusoMania", "we", "us" or "our").</p>
-                <p>These Terms of Service ("Terms", "Terms of Service") govern your access to and use of the MusoMania website, mobile application, and other related services (collectively, the "Service") operated by MusoMania, Inc. ("MusoMania", "us", "we", or "our").</p>
+                <p className="font-bold">Effective Date: January 23, 2025</p>
+                <p>Welcome to MusoMania ("MusoMania", "we", "us" or "our"). These Terms of Service ("Terms", "Terms of Service") govern your access to and use of the MusoMania website, mobile application, and other related services (collectively, the "Service") operated by MusoMania, Inc. ("MusoMania", "us", "we", or "our").</p>
                 <p>Please read these Terms carefully before accessing or using the Service. By accessing or using any part of the Service, you agree to be bound by these Terms. If you disagree with any part of the Terms, then you may not access or use the Service.</p>
                 <h2 className="font-bold text-2xl">Who Can Use the Service</h2>
                 <p>You must be at least 13 years old to access or use the Service. By accessing or using the Service, you represent and warrant that you are at least 13 years old and of legal capacity to enter into a binding agreement.</p>
