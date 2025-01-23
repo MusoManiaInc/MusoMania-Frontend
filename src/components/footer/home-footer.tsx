@@ -7,7 +7,7 @@ const HomeFooter = (props: Props) => {
     // Footer
     <footer className=''>
       {/* Footer wrapper */}
-      <div className='container mx-auto px-12 py-8'> 
+      <div className='container max-w-screen-xl mx-auto px-12 py-8'> 
         {/* First row */}
         <div className='flex justify-between'>
           {/* First row column one */}
@@ -37,10 +37,14 @@ const HomeFooter = (props: Props) => {
           <div>
             {/* Footer nav */}
             <div className='flex flex-col justify-between space-y-4 justify-items-end'>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal"  href='/about' target='_blank'>About</a>
+              <a className="hover:underline"  href='/about' target='_blank'>About</a>
+              <a className="hover:underline" href='/contact' target='_blank'>Contact Us</a>
+              <a className="hover:underline" href='/faq' target='_blank'>FAQ</a>
+              <a className="hover:underline" href='/careers' target='_blank'>Working at MusoMania</a>
+              {/* <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal"  href='/about' target='_blank'>About</a>
               <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/contact' target='_blank'>Contact Us</a>
               <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/faq' target='_blank'>FAQ</a>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/careers' target='_blank'>Working at MusoMania</a>
+              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/careers' target='_blank'>Working at MusoMania</a> */}
             </div>
           </div>
         </div>

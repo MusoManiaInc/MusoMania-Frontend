@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   eslint:{
       ignoreDuringBuilds:true
   },
+  images: {
+    domains: ["assets.aceternity.com"], // Add your allowed domains here
+  },
 };
 
 export default nextConfig;
