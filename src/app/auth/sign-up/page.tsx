@@ -17,7 +17,7 @@ const SignUp = (props: Props) => {
             <Link href="/auth/forget-password" className='text-sm hover:text-blue-500 underline duration-200 ease-in-out hover:opacity-80'>Forgot Password?</Link>
           </div> */}
           <div className="w-full flex flex-col gap-3 items-center">
-            <Button type="submit" variant="default" className='w-full bg-amber-300'>
+            <Button type="submit" variant="default" className='w-full rounded-full text-black font-semibold bg-amber-300 hover:bg-amber-400'>
               Submit
             </Button>
             <p className='dark:text-zinc-500'>

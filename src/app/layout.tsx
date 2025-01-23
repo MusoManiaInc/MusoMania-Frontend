@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "MusoMania",
   description: "The Social Media App For Your Music",
   icons: {
-    icon: "/icons/metadatalogo.png"
+    icon: "/icons/MusaManiaMonday.svg"
   }
 };
 
