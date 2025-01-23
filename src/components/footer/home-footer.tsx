@@ -28,7 +28,7 @@ const HomeFooter = (props: Props) => {
             <div>
               {/* Footer action buttons container */}
               <div className='flex gap-4'>
-                <a href='/sign-up' className="bg-custom-purple2 text-white px-6 py-3 rounded-full hover:bg-custom-purple1 transition-all font-bold">Get Started</a>
+                <a href='/auth/sign-up' className="bg-custom-purple2 text-white px-6 py-3 rounded-full hover:bg-custom-purple1 transition-all font-bold">Get Started</a>
                 <a href='/about' className="px-6 py-3 rounded-full hover:bg-gray-100 transition-all border border-black">Learn More</a>
               </div>
             </div>
