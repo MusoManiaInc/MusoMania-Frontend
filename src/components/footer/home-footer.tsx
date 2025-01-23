@@ -5,21 +5,21 @@ type Props = {}
 const HomeFooter = (props: Props) => {
   return (
     // Footer
-    <footer className=''>
+    <footer className='bg-background/95 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:shadow-secondary'>
       {/* Footer wrapper */}
       <div className='container max-w-screen-xl mx-auto px-12 py-8'> 
         {/* First row */}
         <div className='flex justify-between'>
           {/* First row column one */}
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-8'>
             {/* Footer logo */}
             <div>
               {/* Logo container */}
-              <a className='flex items-center' href='/'>
+              <a className='flex items-center gap-2' href='/'>
                 <div>
-                  <img className='h-24' src="/icons/MusaManiaMonday.svg" alt='MusoMania footer logo' style={{ marginLeft: '-20%' }} />
+                  <img className='h-16' src="/icons/logo.png" alt='MusoMania footer logo' />
                 </div>
-                <div className="font-bold" style={{ marginLeft: '-20%' }}>
+                <div className="font-semibold">
                   <h1 className='text-lg'>MusoMania</h1>
                 </div>
               </a>
