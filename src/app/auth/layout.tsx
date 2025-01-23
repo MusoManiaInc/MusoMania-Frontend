@@ -10,14 +10,9 @@ const Layout = async ({children}:Props) => {
           <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
           <Link href="/" className="flex items-center gap-2">
               <Image
-              src="/icons/logo.png"
+              src="/icons/MusaManiaMonday.svg"
               alt="LOGO"
-              sizes="100vw"
-              className=""
-              style={{
-                  width: '22%',
-                  height: 'auto',
-              }}
+              className="w-[100px] h-[100px]"
               width={0}
               height={0}
               /> 

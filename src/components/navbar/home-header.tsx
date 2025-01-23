@@ -16,12 +16,12 @@ const HomeHeader = (props: Props) => {
           <div className="">
             <Link href="/" className="flex z-40 font-semibold items-center gap-2">
               <Image
-                src="/icons/logo.png"
+                src="/icons/MusaManiaMonday.svg"
                 alt="LOGO"
 
-                className=' object-contain w-[30px] h-[50px]'
-                width={50}
-                height={0}
+                className='w-[100px] h-[100px] object-contain'
+                width={100}
+                height={100}
               />
               <span className='text-lg'>MusoMania</span>
             </Link>
