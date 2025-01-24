@@ -1,4 +1,5 @@
 import ButtonHandler from '@/components/forms/sign-up/button-handler'
+import HighLightBar from '@/components/forms/sign-up/highlight-bar'
 import RegistrationFormStep from '@/components/forms/sign-up/registration-form-step'
 import SignUpForm from '@/components/forms/sign-up/sign-up-form'
 import SignUpFormProvider from '@/components/providers/sign-up-provider'
@@ -17,6 +18,7 @@ const SignUp = (props: Props) => {
           <RegistrationFormStep/>
           <ButtonHandler/>
         </div>
+        <HighLightBar/>
       </SignUpFormProvider>
     </div>
    </div>
