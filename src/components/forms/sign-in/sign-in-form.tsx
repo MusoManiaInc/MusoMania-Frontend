@@ -13,7 +13,7 @@ const SignInForm = (props: Props) => {
     } = useFormContext()
   return (
     <>
-        <h2 className="text-gravel md:text-4xl dark:text-zinc-200 font-bold">Sign In</h2>
+        <h2 className="text-gravel text-3xl md:text-4xl dark:text-zinc-200 font-bold">Sign In</h2>
         <p className='text-sm text-gravel dark:text-zinc-400'>Get Started with MusoMania!</p>
         {USER_LOGIN_FORM.map((field)=>(
             <FormGenerator
