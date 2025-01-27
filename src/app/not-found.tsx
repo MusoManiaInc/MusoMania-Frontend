@@ -10,7 +10,7 @@ const NotFound = (props: Props) => {
     <div className="min-h-screen flex flex-col">
       <HomeHeader />
       {/* Not found page container */}
-      <div className="container mx-auto px-6 py-8 flex flex-col lg:gap-10 lg:flex-row items-center justify-center">
+      <div className="container h-[100vh] mx-auto px-6 py-8 flex flex-col lg:gap-10 lg:flex-row items-center justify-center">
         {/* Not found page column one */}
         <div className="flex-1 max-w-md">
           {/* Not found image/graphic */}
