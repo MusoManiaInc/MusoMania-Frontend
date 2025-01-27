@@ -1,4 +1,8 @@
+'use client'
 import React from 'react'
+import LogoComponent from '../logo/logo'
+import { useState, useEffect } from 'react'
+
 
 type Props = {}
 
@@ -17,7 +21,11 @@ const HomeFooter = (props: Props) => {
               {/* Logo container */}
               <a className='flex items-center gap-2' href='/'>
                 <div>
-                  <img className='h-16' src="/icons/logo.png" alt='MusoMania footer logo' />
+
+
+                  <LogoComponent/>
+
+
                 </div>
                 <div className="font-semibold">
                   <h1 className='text-lg'>MusoMania</h1>
@@ -66,5 +74,7 @@ const HomeFooter = (props: Props) => {
     </footer>
   )
 }
+
+
 
 export default HomeFooter

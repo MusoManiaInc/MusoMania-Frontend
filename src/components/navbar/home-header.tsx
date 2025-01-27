@@ -1,11 +1,12 @@
 'use client'
 import { cn } from '@/lib/utils'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HoveredLink, Menu, MenuItem, ProductItem } from '../ui/navbar-menu'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '../ui/button'
+import LogoComponent from '../logo/logo'
+
 
 type Props = {}
 
@@ -15,14 +16,7 @@ const HomeHeader = (props: Props) => {
         <nav className="mx-auto max-w-screen-xl px-2.5 md:px-20 flex  h-16 items-center justify-between">
           <div className="">
             <Link href="/" className="flex z-40 font-semibold items-center gap-2">
-              <Image
-                src="/icons/MusaManiaMonday.svg"
-                alt="LOGO"
-
-                className='w-[100px] h-[100px] object-contain'
-                width={100}
-                height={100}
-              />
+            <LogoComponent/>
               <span className='text-lg'>MusoMania</span>
             </Link>
           </div>
@@ -54,14 +48,6 @@ function Navbar({ className }: { className?: string }) {
       
       <Menu setActive={setActive} >
       <Link href="/" className="flex z-40 font-semibold items-center gap-2">
-            <Image
-            src="/icons/logo.png"
-            alt="LOGO"
-
-            className=' object-contain w-[40px] h-[50px]'
-            width={50}
-            height={0}
-          />
           <span>MusoMania</span>
         </Link>
         <div className="flex justify-center items-center gap-4">
