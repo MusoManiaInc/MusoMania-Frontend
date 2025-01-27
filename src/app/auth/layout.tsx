@@ -1,5 +1,8 @@
+import LogoComponent from "@/components/logo/logo"
 import Image from "next/image"
 import Link from "next/link"
+import {useState, useEffect} from "react"
+
 
 type Props = {
     children: React.ReactNode,
@@ -9,13 +12,7 @@ const Layout = async ({children}:Props) => {
       <div className="h-screen flex w-full justify-center">
           <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
           <Link href="/" className="flex items-center gap-2">
-              <Image
-              src="/icons/MusaManiaMonday.svg"
-              alt="LOGO"
-              className="w-[100px] h-[100px]"
-              width={0}
-              height={0}
-              /> 
+              <LogoComponent />
               <span className="font-semibold text-lg">MusoMania</span>
           </Link>
           {children}
