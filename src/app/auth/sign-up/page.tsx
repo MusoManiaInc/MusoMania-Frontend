@@ -1,37 +1,124 @@
-import SignUpForm from '@/components/forms/sign-up/sign-up-form'
-import SignUpFormProvider from '@/components/providers/sign-up-provider'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import React from 'react'
+"use client";
 
-type Props = {}
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-const SignUp = (props: Props) => {
+export default function SignUpPage() {
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [emailAddress, setEmailAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  async function handleSignUp(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        credentials: 'include', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          emailAddress,
+          password,
+          firstName,
+          lastName,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(errorData.msg || 'Failed to sign up.');
+        return;
+      }
+
+      alert('User registered successfully!');
+      // Typically you’ll then direct them to Sign In
+      router.push('/auth/sign-in');
+    } catch (error: any) {
+      console.error('Sign up error:', error);
+      alert('Error signing up. Check console.');
+    }
+  }
+
   return (
-    <div className="flex-1 py-36 md:px-16 w-full">
-    <div className="flex flex-col h-full gap-3">
-      <SignUpFormProvider>
-        <div className="flex flex-col gap-3">
-          <SignUpForm/>
-          {/* <div className="">
-            <Link href="/auth/forget-password" className='text-sm hover:text-blue-500 underline duration-200 ease-in-out hover:opacity-80'>Forgot Password?</Link>
-          </div> */}
-          <div className="w-full flex flex-col gap-3 items-center">
-            <Button type="submit" variant="default" className='w-full bg-amber-300'>
-              Submit
-            </Button>
-            <p className='dark:text-zinc-500'>
-              Have an account?{' '}
-              <Link href="/auth/sign-in" className='font-bold dark:text-zinc-400 hover:underline'>
-                Sign In
-              </Link>
-            </p>
-          </div>
+    <div style={{ maxWidth: '320px', margin: '100px auto' }}>
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSignUp} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        
+        <div>
+          <label>First Name:</label><br />
+          <input
+            type="text"
+            placeholder="First name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+          />
         </div>
-      </SignUpFormProvider>
-    </div>
-   </div>
-  )
-}
 
-export default SignUp
+        <div>
+          <label>Last Name:</label><br />
+          <input
+            type="text"
+            placeholder="Last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+          />
+        </div>
+
+        <div>
+          <label>Username:</label><br />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+          />
+        </div>
+
+        <div>
+          <label>Email:</label><br />
+          <input
+            type="email"
+            placeholder="Email address"
+            value={emailAddress}
+            onChange={(e) => setEmailAddress(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+          />
+        </div>
+
+        <div>
+          <label>Password:</label><br />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+          />
+        </div>
+
+        <button type="submit" style={{ padding: '0.5rem', cursor: 'pointer' }}>
+          Sign Up
+        </button>
+      </form>
+
+      <p style={{ marginTop: '1rem' }}>
+        Already have an account?{' '}
+        <Link href="/auth/sign-in" style={{ fontWeight: 'bold' }}>
+          Sign In
+        </Link>
+      </p>
+    </div>
+  );
+}
