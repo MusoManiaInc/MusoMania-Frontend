@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const LogoComponent = () => {
-  const [currentImage, setCurrentImage] = useState<string>("");
+  const [currentImage, setCurrentImage] = useState<string>("null");
 
   useEffect(() => {
     const images: { [key in "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"]: string } = {
