@@ -49,14 +49,14 @@ const FormGenerator = ({
                   form={form}
                   required={true}
                   defaultValue={defaultValue}
-                  className='dark:bg-zinc-700'
+                  className='dark:bg-zinc-700 rounded-full'
                   {...register(name)}
                 />
                 {/* Show/Hide toggle button for password */}
                 {type === 'password' && (
                   <Button
                   type='button'
-                    className="absolute bg-transparent right-1 top-0 text-sm shadow-none text-zinc-400"
+                    className="absolute bg-transparent rounded-full right-1 top-0 text-sm shadow-none text-zinc-400"
                     variant='none'
                     onClick={() => setShowPassword(!showPassword)}
                   >

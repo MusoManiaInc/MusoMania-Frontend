@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MusoMania",
-  description: "The Social Media App For Your Music",
+  description: "Where Music Meets Opportunity",
   icons: {
-    icon: "/icons/metadatalogo.png"
+    icon: "/icons/MusaManiaMonday.svg"
   }
 };
 
