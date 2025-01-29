@@ -19,8 +19,9 @@ export default function SignInPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
+      console.log(response)
       if (!response.ok) {
+        console.log(response)
         const errorData = await response.json();
         alert(errorData.msg || "Failed to sign in.");
         return;
@@ -34,8 +35,10 @@ export default function SignInPage() {
       if (data && data.token) {
         Cookies.set("token", data.token, { expires: 7 }); // Set cookie for 7 days
       }
-
-      alert("Successfully signed in!");
+      if (data && data.user){
+        // save the user to a cookie 
+        Cookies.set("userDisplayName", data.user.displayName, { expires: 7 });
+      }
       router.push("/"); // Navigate to Home or another protected page
     } catch (error) {
       console.error("Sign in error:", error);

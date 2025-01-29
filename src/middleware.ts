@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
 
   // If no token, redirect to /auth/sign-in
   if (!token) {
-    return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+    return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
 
   // Otherwise allow the request
