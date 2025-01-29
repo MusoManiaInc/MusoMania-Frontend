@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <HomeHeader/>
         <div className="flex-grow">
-            Home PAGE!
+            Home PAGE
         </div>
       <HomeFooter/>
     </div>
