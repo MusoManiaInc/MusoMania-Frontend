@@ -20,7 +20,7 @@ const LogoComponent = () => {
   }, []);
 
   return (
-      <img className="h-16" src={currentImage} alt="MusoMania footer logo" />
+      <img className="h-12" src={currentImage} alt="MusoMania footer logo" />
   );
 };
 
