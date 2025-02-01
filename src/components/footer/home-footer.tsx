@@ -1,4 +1,8 @@
+'use client'
 import React from 'react'
+import LogoComponent from '../logo/logo'
+import { useState, useEffect } from 'react'
+
 
 type Props = {}
 
@@ -17,7 +21,11 @@ const HomeFooter = (props: Props) => {
               {/* Logo container */}
               <a className='flex items-center gap-2' href='/'>
                 <div>
-                  <img className='h-16' src="/icons/logo.png" alt='MusoMania footer logo' />
+
+
+                  <LogoComponent/>
+
+
                 </div>
                 <div className="font-semibold">
                   <h1 className='text-lg'>MusoMania</h1>
@@ -37,14 +45,11 @@ const HomeFooter = (props: Props) => {
           <div>
             {/* Footer nav */}
             <div className='flex flex-col justify-between space-y-4 justify-items-end'>
-              <a className="hover:underline"  href='/about' target='_blank'>About</a>
-              <a className="hover:underline" href='/contact' target='_blank'>Contact Us</a>
-              <a className="hover:underline" href='/faq' target='_blank'>FAQ</a>
-              <a className="hover:underline" href='/careers' target='_blank'>Working at MusoMania</a>
-              {/* <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal"  href='/about' target='_blank'>About</a>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/contact' target='_blank'>Contact Us</a>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/faq' target='_blank'>FAQ</a>
-              <a className="transition-all duration-200 ease-in-out transform hover:scale-105 hover:text-black font-normal" href='/careers' target='_blank'>Working at MusoMania</a> */}
+              <a className="hover:underline"  href='/about' >About</a>
+              <a className="hover:underline" href='/contact' >Contact Us</a>
+              <a className="hover:underline" href='/faq' >FAQ</a>
+              <a className="hover:underline" href='/careers' >Working at MusoMania</a>
+            
             </div>
           </div>
         </div>
@@ -60,8 +65,8 @@ const HomeFooter = (props: Props) => {
           <div>
               {/* Legal nav */}
             <div className='flex jusify-space-between gap-2'>
-              <a className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-150 hover:after:w-full" href='/privacy-policy' target='_blank'>Privacy Policy</a>
-              <a className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-150 hover:after:w-full" href='/terms-of-service' target='_blank'>Terms of Service</a>
+              <a className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-150 hover:after:w-full" href='/privacy-policy' >Privacy Policy</a>
+              <a className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-black after:transition-all after:duration-150 hover:after:w-full" href='/terms-of-service' >Terms of Service</a>
             </div>
           </div>
         </div>
@@ -69,5 +74,7 @@ const HomeFooter = (props: Props) => {
     </footer>
   )
 }
+
+
 
 export default HomeFooter
