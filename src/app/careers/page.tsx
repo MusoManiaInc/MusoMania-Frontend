@@ -35,6 +35,15 @@ export default function Careers() {
               </div>
             </div>
           </div>
+          <hr />
+          {/* Careers page open roles */}
+          <div id="open-roles" className="px-6 py-8 flex flex-col gap-10 justify-center items-center">
+            <div className="px-6 py-8 flex flex-col gap-10 justify-center items-center text-center">
+              <h1 className="text-3xl text-center font-semibold">Current openings</h1>
+              {/* Temporary placeholder text for no postings */}
+              <p>Sorry, we don't have any openings at the moment. Please check back later.</p>
+            </div>
+          </div>
         </div>
         <HomeFooter />
     </div>
