@@ -28,6 +28,7 @@ export default function Careers() {
               </div>
               <div>
                 <p>MusoMania was founded in 2025 as a social media platform designed for musicians to <b>connect, collaborate, and monetize</b> their talents. Our platform <b>empowers musicians</b> by allowing them to share their music, find bandmates, sell rights or sheet music, and even offer their skills as a service (e.g. recording drum loops).</p>
+                <p className="pt-2">You can come work with us in cities across Canada.</p>
               </div>
               <div>
                 <a href="/about" className="px-6 py-3 rounded-full hover:bg-gray-100 transition-all border border-black">Learn more</a>
