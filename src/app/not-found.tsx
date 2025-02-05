@@ -1,7 +1,7 @@
 import React from 'react'
 import HomeFooter from "@/components/footer/home-footer";
 import HomeHeader from "@/components/navbar/home-header";
-import Home from './page';
+import Home from './(auth)/page';
 
 type Props = {}
 

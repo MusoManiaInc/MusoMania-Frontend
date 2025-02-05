@@ -1,5 +1,5 @@
 import HomeFooter from "@/components/footer/home-footer";
-import HomeHeader from "@/components/navbar/home-header";
+import HomeHeader from "@/components/navbar/navbar";
 
 export default function PrivacyPolicy() {
   return (

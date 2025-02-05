@@ -22,13 +22,13 @@ const HomeHeader = (props: Props) => {
           </div>
           <div className="flex gap-4">
             <Button className='rounded-full bg-custom-purple2 text-white px-6 py-3 hover:bg-custom-purple1 transition-all font-bold'>
-              <Link href="/auth/sign-up" >
+              <Link href="/signup" >
                 Join Now
               </Link>
             </Button>
             <Button className='rounded-full bg-transparent hover:bg-gray-100 transition-all border border-black text-black'>
-              <Link href="/auth/sign-in">
-                Sign In
+              <Link href="/login">
+                Log In
               </Link>
             </Button>
           </div>
