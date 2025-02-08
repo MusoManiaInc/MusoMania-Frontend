@@ -9,19 +9,22 @@ export default {
   ],
   theme: {
   	extend: {
-		fontFamily: {
-			sans: ["Calibri", "Arial", "sans-serif"], // Calibri as the primary font
-		  },
+  		fontFamily: {
+  			sans: [
+  				'Calibri',
+  				'Arial',
+  				'sans-serif'
+  			]
+  		},
   		colors: {
-			
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-			custom: {
-				purple1: "#290849", // rgb(41,8,73)
-				purple2: "#55185D", // rgb(55,24,93)
-				yellow1: "#FFD524", // rgb(255,213,36)
-				yellow2: "#ECB602", // rgb(236,182,2)
-			},
+  			custom: {
+  				purple1: '#290849',
+  				purple2: '#55185D',
+  				yellow1: '#FFD524',
+  				yellow2: '#ECB602'
+  			},
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -59,6 +62,16 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
+  			},
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
