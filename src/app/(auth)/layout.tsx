@@ -8,7 +8,7 @@ export default async function Layout({children}:{children:React.ReactNode}){
     const {user} = await validateRequest();
 
 
-    if(user) redirect("/Platform"); // so in this layout you can't look at login or sign up when you are logged in
+    if(user) redirect("/Platform"); // so in this layout you can't look at login or sign up or dashboard when you are logged in
 
     return <>{children}</>
 }
