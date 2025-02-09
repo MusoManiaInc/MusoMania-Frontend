@@ -18,7 +18,7 @@ export default async function Home() {
                     <Post key={post.id} post={post} />
                 ))}
             </div>
-            <TrendsSidebar />
+            {/* <TrendsSidebar /> */}
         </main>
     );
 }

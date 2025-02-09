@@ -16,7 +16,7 @@ const HomeHeader = (props: Props) => {
         <nav className="mx-auto max-w-screen-xl px-4 md:px-20 flex  h-16 items-center justify-between">
           <div className="">
             <Link href="/" className="flex z-40 font-semibold items-center gap-2">
-            <LogoComponent/>
+            <LogoComponent height="h-12"/>
               <span className='text-lg'>MusoMania</span>
             </Link>
           </div>
