@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/app/Platform/SessionProvider";
+import { useSession } from "@/app/feed/SessionProvider";
 import { PostData } from "@/lib/types";
 import { formatRelativeDate } from "@/lib/utils";
 import Link from "next/link";

@@ -76,7 +76,7 @@ export async function signUp(
             sessionCookie.attributes,
         );
 
-        return redirect("/Platform");
+        return redirect("/feed");
     } catch (error) {
         if (isRedirectError(error)) throw error;
         console.error(error);

@@ -53,7 +53,7 @@ export async function login(
         );
 
         // This will throw a redirect error which is handled by Next.js internally
-        return redirect("/Platform");
+        return redirect("/feed");
     } catch (error) {
         // Optionally, you can re-throw redirect errors if needed
         if (error instanceof Error && error.message === "NEXT_REDIRECT") {

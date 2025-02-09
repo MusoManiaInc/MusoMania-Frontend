@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/app/Platform/SessionProvider";
+import { useSession } from "@/app/feed/SessionProvider";
 import LoadingButton from "@/components/LoadingButton";
 import UserAvatar from "@/components/UserAvatar";
 import Placeholder from "@tiptap/extension-placeholder";
