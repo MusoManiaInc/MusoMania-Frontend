@@ -12,6 +12,7 @@ export default async function Layout({
 }) {
     const session = await validateRequest();
 
+
     if (!session.user) redirect("/login");
 
     return (
@@ -19,9 +20,9 @@ export default async function Layout({
             <div className="flex min-h-screen flex-col">
 
                 <div className="mx-auto flex w-full justify-between gap-5 ">
-                    <MenuBar />
+                    <MenuBar session={session}/>
                     {children}
-                    <ProfileSection/>
+                    <ProfileSection session={session} />
                 </div>
 
             </div>
