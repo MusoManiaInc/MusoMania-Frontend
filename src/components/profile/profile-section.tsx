@@ -27,7 +27,7 @@ const ProfileSection = ({  session}: Props) => {
   }, [activeSession]); // Make sure effect updates when session changes
 
   return (
-    <div className="w-[600px] bg-gray-50 sticky top-0 h-screen px-4 pt-10 border-l border-gray-100">
+    <div className="w-[600px] bg-gray-50 sticky top-0 h-screen px-4 pt-10 -z-10 border-l border-gray-100">
       <div className="flex flex-col">
         <div className="relative w-[100px] mx-auto flex justify-center">
           <UserAvatar avatarUrl={user?.avatarUrl} size={70} className="" />

@@ -17,8 +17,8 @@ const MenuItemFeed = ({ title, icon, href }: MenuItemProps) => {
     return (
         <Link
             href={href}
-            className={`flex w-full items-center justify-start gap-3 py-1.5 px-4 rounded-xl transition-all duration-100 hover:bg-purple-50 ${
-                isActive ? "!bg-purple-100 text-purple-800" : "bg-transparent"
+            className={`flex w-full items-center justify-start gap-3 py-3 lg:py-1.5 px-4 rounded-xl transition-all duration-100 hover:bg-purple-100 ${
+                isActive ? "!bg-purple-200 text-purple-800" : "bg-transparent"
             }`}
         >
             {icon}

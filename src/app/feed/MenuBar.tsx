@@ -7,8 +7,9 @@ import { Search, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Session } from "lucia";
-import { handleSignOut } from "@/auth";
 import { logout } from "../(auth)/actions";
+
+import { AnimatePresence,motion } from 'framer-motion';
 
 import {
     Dialog,
@@ -20,6 +21,9 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+
 interface MenuBarProps {
     className?: string;
     session:Session
@@ -27,19 +31,35 @@ interface MenuBarProps {
 
 export default function MenuBar({ className, session }: MenuBarProps) {
 
+    const [searchDialogOpen, setSearchDialogOpen] = useState(false)
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setSearchDialogOpen(false);
+            }
+        };
+    
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
 
     return (
-        <div className="w-[400px] bg-gray-50 sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
-            {/* Top Section - Logo, Search Bar, and Menu Items */}
+        <div className="w-[80px] lg:w-[400px] bg-gray-50 sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
             <div className="pt-6">
                 <div>
-                    <Link href="/" className="flex z-40 font-semibold items-center gap-2">
+                    <Link href="/" className="flex z-40 font-semibold items-center justify-center lg:justify-start gap-2">
                         <LogoComponent height="h-8" />
-                        <span className="text-md">MusoMania</span>
+                        <span className="text-md hidden lg:inline">MusoMania</span>
                     </Link>
                 </div>
-
-                <div className="relative mt-12">
+                <div className="block lg:hidden mt-8">
+                    <Button onClick={ ()=> setSearchDialogOpen(true)} className="bg-white outline-none hover:bg-gray-100 shadow-none border  rounded-xl ">
+                        <Search className="!w-4 !h-4 text-gray-800 "/>
+                    </Button>
+                </div>
+                <div className="relative hidden lg:block mt-12">
                     <Search className="w-5 h-5 text-zinc-400 dark:text-zinc-700 absolute top-1/2 transform -translate-y-1/2 left-2" />
                     <input
                         placeholder="Search..."
@@ -54,12 +74,11 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                 </div>
             </div>
 
-            {/* Bottom Section - Sign Out Button */}
             <div className=" pb-6 border-t border-gray-300">
             <Dialog>
                 <DialogTrigger asChild>
                 <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mt-4">
-                    Sign Out
+                   <span className="hidden lg:inline">Sign Out</span> 
                     <LogOut size={14} />
                 </Button>
                 </DialogTrigger>
@@ -88,6 +107,51 @@ export default function MenuBar({ className, session }: MenuBarProps) {
             </Dialog>
                 
             </div>
+            {searchDialogOpen && (
+            <AnimatePresence>
+                <motion.div
+                key="dialog-overlay"
+                className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setSearchDialogOpen(false)}
+                >
+                <motion.div
+                    key="dialog-content"
+                    className="bg-white dark:bg-zinc-800 rounded-xl shadow-lg w-[600px]"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div className="">
+                        <div className="relative">
+                            <Search className="w-5 h-5 text-zinc-400 dark:text-zinc-700 absolute top-1/2 transform -translate-y-1/2 left-2" />
+                            <input
+                                placeholder="Search..."
+                                className="rounded-t-xl pl-9 outline-none dark:text-zinc-300 border border-gray-200 py-3 w-full"
+                            />
+                        </div>
+                        <div className="border-t border-gray-100 w-full"></div>
+                        <div className="px-4 font-semibold py-4">
+                            Search for your favourite music!
+                        </div>
+                        <div className="w-full flex justify-end px-4 py-4 border-t border-gray-200">
+                            <div className="flex items-center gap-2">
+                                <div className="text-xs p-1 px-2 cursor-default border border-gray-200 text-gray-500 rounded-sm">esc</div>
+                                <span className="text-sm text-gray-600">Close</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </motion.div>
+                </motion.div>
+            </AnimatePresence>
+            )}
         </div>
     );
 }
