@@ -27,7 +27,7 @@ const ProfileSection = ({  session}: Props) => {
   }, [activeSession]); // Make sure effect updates when session changes
 
   return (
-    <div className="w-[600px] bg-gray-50 sticky top-0 h-screen px-4 pt-10 -z-10 border-l border-gray-100">
+    <div className="lg:w-[600px] hidden lg:block bg-gray-50 sticky top-0 h-screen px-4 pt-10 border-l border-gray-100">
       <div className="flex flex-col">
         <div className="relative w-[100px] mx-auto flex justify-center">
           <UserAvatar avatarUrl={user?.avatarUrl} size={70} className="" />
@@ -61,18 +61,17 @@ const ProfileSection = ({  session}: Props) => {
           <div className="flex justify-between">
             <span className="font-semibold text-sm">About Me</span>
               <DropdownMenu>
-            <DropdownMenuTrigger asChild className="cursor-pointer">
-              <Ellipsis className="h-4 w-4 rotate-90" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="hover:bg-purple-100 text-purple-700" >
-                    <div className="w-full flex items-center gap-2 ">
-                        <Pencil className='w-4 h-4 text-zinc-600 dark:text-zinc-400'/>
-                        <span className='text-sm text-zinc-600 dark:text-zinc-400'>Edit Bio</span>
-                    </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-            
+                <DropdownMenuTrigger asChild className="cursor-pointer">
+                  <Ellipsis className="h-4 w-4 rotate-90" />
+                </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="hover:bg-purple-100 text-purple-700" >
+                      <div className="w-full flex items-center gap-2 ">
+                          <Pencil className='w-4 h-4 text-zinc-600 dark:text-zinc-400'/>
+                          <span className='text-sm text-zinc-600 dark:text-zinc-400'>Edit Bio</span>
+                      </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
           </DropdownMenu>
           </div>
            

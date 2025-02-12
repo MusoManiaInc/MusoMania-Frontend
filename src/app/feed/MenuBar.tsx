@@ -3,7 +3,7 @@ import LogoComponent from "@/components/logo/logo";
 import { Button } from "@/components/ui/button";
 import MenuItemFeed from "@/components/navbar/menu-item";
 import { feedMenuItems } from "@/constants";
-import { Search, LogOut } from "lucide-react";
+import { Search, LogOut, UserRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Session } from "lucia";
@@ -23,14 +23,29 @@ import {
   } from "@/components/ui/dialog"
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface MenuBarProps {
     className?: string;
     session:Session
 }
+const useMediaQuery = (query: string) => {
+    const [matches, setMatches] = useState(false);
+  
+    useEffect(() => {
+      const mediaQuery = window.matchMedia(query);
+      setMatches(mediaQuery.matches);
+  
+      const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+      mediaQuery.addEventListener("change", listener);
+      return () => mediaQuery.removeEventListener("change", listener);
+    }, [query]);
+  
+    return matches;
+  };
 
 export default function MenuBar({ className, session }: MenuBarProps) {
-
+    const isLgScreen = useMediaQuery("(min-width: 1024px)");
     const [searchDialogOpen, setSearchDialogOpen] = useState(false)
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -73,40 +88,68 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                     ))}
                 </div>
             </div>
-
-            <div className=" pb-6 border-t border-gray-300">
-            <Dialog>
-                <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mt-4">
-                   <span className="hidden lg:inline">Sign Out</span> 
-                    <LogOut size={14} />
-                </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                    <DialogTitle>Want to leave?</DialogTitle>
-                    <DialogDescription>
-                        Are you sure you want to log out?
-                    </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter className="mt-4 flex">
-                        <DialogClose asChild>
-                            <div className="w-full">
-                            <Button size="sm" className="w-full  bg-zinc-900">
-                                Cancel
-                            </Button>
-                            </div>
-                        </DialogClose>
-                            <div className="w-full">
-                                <Button size="sm" className="w-full  bg-purple-500 hover:bg-purple-600" onClick={() => logout()}>
-                                    Logout
+            <div className="">
+                <div className="block lg:hidden">
+                <TooltipProvider>
+                    {isLgScreen ? (
+                            <Link href="/feed/profile">
+                                <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mb-4">
+                                    <UserRound className="w-4 h-4"/>
                                 </Button>
-                            </div>
-                        </DialogFooter>
-                </DialogContent>
-            </Dialog>
-                
+                            </Link>
+                    ) : (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                    <Link href="/feed/profile">
+                                        <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mb-4">
+                                            <UserRound className="w-4 h-4"/>
+                                        </Button>
+                                    </Link>
+                            </TooltipTrigger>
+                            <TooltipContent side="right">
+                                <p>Profile</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    )}
+                </TooltipProvider>
+                    
+                    
+                </div>
+                <div className=" mb-6 border-t border-gray-300">
+                <Dialog>
+                    <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mt-4">
+                    <span className="hidden lg:inline">Sign Out</span> 
+                        <LogOut size={14} />
+                    </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                        <DialogTitle>Want to leave?</DialogTitle>
+                        <DialogDescription>
+                            Are you sure you want to log out?
+                        </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter className="mt-4 flex">
+                            <DialogClose asChild>
+                                <div className="w-full">
+                                <Button size="sm" className="w-full  bg-zinc-900">
+                                    Cancel
+                                </Button>
+                                </div>
+                            </DialogClose>
+                                <div className="w-full">
+                                    <Button size="sm" className="w-full  bg-purple-500 hover:bg-purple-600" onClick={() => logout()}>
+                                        Logout
+                                    </Button>
+                                </div>
+                            </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+                    
+                </div>
             </div>
+            
             {searchDialogOpen && (
             <AnimatePresence>
                 <motion.div
