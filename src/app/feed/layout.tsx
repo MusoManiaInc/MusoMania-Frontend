@@ -1,5 +1,5 @@
 import { validateRequest } from "@/auth";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import MenuBar from "./MenuBar";
 import Navbar from "./Navbar";
 import ProfileSection from "../../components/profile/profile-section"
@@ -12,17 +12,16 @@ export default async function Layout({
 }) {
     const session = await validateRequest();
 
-
     if (!session.user) redirect("/login");
 
     return (
         <SessionProvider value={session}>
             <div className="flex min-h-screen flex-col">
 
-                <div className="mx-auto flex w-full justify-between gap-5 ">
+                <div className="mx-auto flex w-full justify-between ">
                     <MenuBar session={session}/>
                     {children}
-                    <ProfileSection session={session} />
+                    
                 </div>
 
             </div>

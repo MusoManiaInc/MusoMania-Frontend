@@ -24,6 +24,8 @@ import {
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import UserAvatar from "@/components/UserAvatar";
+import { useSession } from "./SessionProvider";
 
 interface MenuBarProps {
     className?: string;
@@ -47,6 +49,7 @@ const useMediaQuery = (query: string) => {
 export default function MenuBar({ className, session }: MenuBarProps) {
     const isLgScreen = useMediaQuery("(min-width: 1024px)");
     const [searchDialogOpen, setSearchDialogOpen] = useState(false)
+    const { user } = useSession();
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
@@ -61,15 +64,15 @@ export default function MenuBar({ className, session }: MenuBarProps) {
     }, []);
 
     return (
-        <div className="w-[80px] lg:w-[400px] bg-gray-50 sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
+        <div className="w-[80px] lg:w-[400px] bg-[#5046E4] sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
             <div className="pt-6">
                 <div>
                     <Link href="/" className="flex z-40 font-semibold items-center justify-center lg:justify-start gap-2">
-                        <LogoComponent height="h-8" />
-                        <span className="text-md hidden lg:inline">MusoMania</span>
+                        <LogoComponent height="h-19" />
+                        <span className="text-lg text-white hidden lg:inline">MusoMania</span>
                     </Link>
                 </div>
-                <div className="block lg:hidden mt-8">
+                {/* <div className="block lg:hidden mt-8">
                     <Button onClick={ ()=> setSearchDialogOpen(true)} className="bg-white outline-none hover:bg-gray-100 shadow-none border  rounded-xl ">
                         <Search className="!w-4 !h-4 text-gray-800 "/>
                     </Button>
@@ -80,7 +83,7 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                         placeholder="Search..."
                         className="rounded-xl pl-9 outline-none dark:text-zinc-300 border border-gray-200 py-1 w-full"
                     />
-                </div>
+                </div> */}
 
                 <div className="mt-6 flex flex-col gap-4">
                     {feedMenuItems.map((item) => (
@@ -115,11 +118,18 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                     
                     
                 </div>
-                <div className=" mb-6 border-t border-gray-300">
+                <div className=" mb-6 border-t  border-[#6166EF] ">
+                    <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center gap-2">
+                    <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
+                    <div className="grid">
+                        <span className="font-semibold text-white">{user.displayName}</span>
+                        <span className="text-white">{user.email}</span>
+                    </div>
+                 </div>   
                 <Dialog>
                     <DialogTrigger asChild>
-                    <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mt-4">
-                    <span className="hidden lg:inline">Sign Out</span> 
+                    <Button className=" bg-transparent shadow-none hover:bg-[#6166EF]  justify-center !py-3 !rounded-xl">
                         <LogOut size={14} />
                     </Button>
                     </DialogTrigger>
@@ -146,6 +156,8 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                             </DialogFooter>
                     </DialogContent>
                 </Dialog>
+                    </div>
+                
                     
                 </div>
             </div>
