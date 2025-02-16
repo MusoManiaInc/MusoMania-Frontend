@@ -149,7 +149,7 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                                 </div>
                             </DialogClose>
                                 <div className="w-full">
-                                    <Button size="sm" className="w-full  bg-purple-500 hover:bg-purple-600" onClick={() => logout()}>
+                                    <Button size="sm" className="w-full  bg-[#5046E4] hover:bg-[#302988]" onClick={() => logout()}>
                                         Logout
                                     </Button>
                                 </div>
