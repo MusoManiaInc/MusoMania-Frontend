@@ -1,3 +1,4 @@
+
 import { validateRequest } from "@/auth";
 import PostEditor from "@/components/posts/editor/PostEditor";
 import Post from "@/components/posts/Post";
@@ -42,6 +43,7 @@ export default async function Home() {
                 
             </div>
             <ProfileSection session={session} />
+
         </main>
     );
 }

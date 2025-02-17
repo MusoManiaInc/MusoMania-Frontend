@@ -1,3 +1,4 @@
+
 "use client"
 import LogoComponent from "@/components/logo/logo";
 import { Button } from "@/components/ui/button";
@@ -226,3 +227,4 @@ export default function MenuBar({ className, session }: MenuBarProps) {
         </div>
     );
 }
+

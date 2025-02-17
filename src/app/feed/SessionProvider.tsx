@@ -21,6 +21,7 @@ export default function SessionProvider({
 }
 
 
+
 export function useSession(){
 
     const context = useContext(SessionContext);
@@ -28,6 +29,7 @@ export function useSession(){
     if(!context){
         throw new Error("use session is not used within a provider, you should make sure this hook is within the provider");
     }
+
 
     return context;
 }
