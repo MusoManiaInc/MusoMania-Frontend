@@ -16,8 +16,8 @@ export default async function Home() {
     const session = await validateRequest();
     return (
         <main className="flex w-full min-w-0">
-            <div className="w-full min-w-0 space-y-5">
-                <div className="flex justify-between items-center bg-white border-b border-r border-gray-200 p-4">
+            <div className="w-full min-w-0  bg-[#f9fbfc]">
+                <div className="flex justify-between items-center bg-white border-b  border-gray-200 p-4">
                     <div className="relative w-[600px]">
                         <Search className="w-5 h-5 text-zinc-400 dark:text-zinc-700 absolute top-1/2 transform -translate-y-1/2 left-2" />
                         <input
@@ -33,10 +33,13 @@ export default async function Home() {
                         </Link>
                     </div>
                 </div>
-                <PostEditor />
-                {posts.map((post) => (
-                    <Post key={post.id} post={post} />
-                ))}
+                <div className="space-y-5 mt-5 px-4">
+                    {/* <PostEditor /> */}
+                    {posts.map((post) => (
+                        <Post key={post.id} post={post} />
+                    ))}
+                </div>
+                
             </div>
             <ProfileSection session={session} />
         </main>
