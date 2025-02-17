@@ -1,7 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-const LogoComponent = () => {
+type LogoComponentProps = {
+  height: string;
+}
+const LogoComponent = ({height}:LogoComponentProps) => {
   const [currentImage, setCurrentImage] = useState<string>("null");
 
   useEffect(() => {
@@ -20,7 +23,7 @@ const LogoComponent = () => {
   }, []);
 
   return (
-      <img className="h-12" src={currentImage} alt="MusoMania footer logo" />
+      <img className={`${height} h-12`} src={currentImage} alt="MusoMania footer logo" />
   );
 };
 

@@ -1,7 +1,11 @@
 "use client";
 
 import { useSession } from "@/app/feed/SessionProvider";
+
+import { Button } from "@/components/ui/button";
+
 import LoadingButton from "@/components/LoadingButton";
+
 import UserAvatar from "@/components/UserAvatar";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";

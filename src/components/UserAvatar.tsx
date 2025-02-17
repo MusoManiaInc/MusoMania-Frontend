@@ -14,15 +14,18 @@ export default function UserAvatar({
     className,
 }: UserAvatarProps) {
     return (
-        <Image
+
+<Image
             src={avatarUrl || avatarPlaceholder}
             alt="User avatar"
-            width={size ?? 48}
-            height={size ?? 48}
+            width={size ?? 40}
+            height={size ?? 40}
             className={cn(
                 "aspect-square h-fit flex-none rounded-full bg-secondary object-cover",
                 className,
             )}
         />
+
+        
     );
 }
