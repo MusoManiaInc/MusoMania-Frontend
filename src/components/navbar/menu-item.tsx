@@ -55,7 +55,7 @@ const MenuItemFeed = ({ title, icon, href }: MenuItemProps) => {
           <TooltipTrigger asChild>
             <Link
               href={href}
-              className={`flex w-full items-center justify-start text-white gap-3 py-3 lg:py-1.5 px-4 rounded-xl transition-all duration-100 hover:bg-purple-100 ${
+              className={`flex w-full items-center justify-start text-white gap-3 py-3 lg:py-1.5 px-4 rounded-xl transition-all duration-100 hover:bg-[#6166EF] ${
                 isActive ? "!bg-[#6166EF] text-purple-800" : "bg-transparent"
               }`}
             >

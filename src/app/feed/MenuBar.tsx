@@ -3,7 +3,7 @@ import LogoComponent from "@/components/logo/logo";
 import { Button } from "@/components/ui/button";
 import MenuItemFeed from "@/components/navbar/menu-item";
 import { feedMenuItems } from "@/constants";
-import { Search, LogOut, UserRound } from "lucide-react";
+import { Search, LogOut, UserRound, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Session } from "lucia";
@@ -21,6 +21,20 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -92,44 +106,46 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                 </div>
             </div>
             <div className="">
-                <div className="block lg:hidden">
-                <TooltipProvider>
-                    {isLgScreen ? (
-                            <Link href="/feed/profile">
-                                <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mb-4">
-                                    <UserRound className="w-4 h-4"/>
-                                </Button>
-                            </Link>
-                    ) : (
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                    <Link href="/feed/profile">
-                                        <Button variant="outline" className="w-full justify-center !py-3 !rounded-xl mb-4">
-                                            <UserRound className="w-4 h-4"/>
-                                        </Button>
-                                    </Link>
-                            </TooltipTrigger>
-                            <TooltipContent side="right">
-                                <p>Profile</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    )}
-                </TooltipProvider>
-                    
-                    
-                </div>
                 <div className=" mb-6 border-t  border-[#6166EF] ">
-                    <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-2">
-                    <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
-                    <div className="grid">
-                        <span className="font-semibold text-white">{user.displayName}</span>
-                        <span className="text-white">{user.email}</span>
-                    </div>
-                 </div>   
+                    <div className="flex items-center justify-center  lg:justify-between mt-3">
+                        <div className="hidden lg:flex items-center  gap-2 ">
+                                <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
+                            <div className="grid">
+                                <span className="font-semibold text-white hidden lg:grid">{user.displayName}</span>
+                                <span className="text-gray-300 text-sm hidden lg:grid">{user.email}</span>
+                            </div>
+                        </div>
+                        <div className="flex lg:hidden">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button className="!bg-transparent !p-0">
+                                    <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 ml-4 mb-2">
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                <DropdownMenuItem className="gap-2 cursor-pointer">
+                                    <User className="w-4 h-4"/>
+                                    <span>Profile</span>    
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="gap-2 cursor-pointer">
+                                    <Settings className="w-4 h-4"/>
+                                    <span>Settings</span>
+                                </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => logout()}>
+                                <LogOut className="w-4 h-4"/>
+                                <span>Log out</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>   
                 <Dialog>
-                    <DialogTrigger asChild>
-                    <Button className=" bg-transparent shadow-none hover:bg-[#6166EF]  justify-center !py-3 !rounded-xl">
+                    <DialogTrigger asChild className="">
+                    <Button className="hidden lg:flex item-center bg-transparent shadow-none hover:bg-[#6166EF]  justify-center !py-2 !rounded-xl">
                         <LogOut size={14} />
                     </Button>
                     </DialogTrigger>
