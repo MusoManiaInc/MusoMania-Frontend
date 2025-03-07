@@ -31,7 +31,11 @@ export default function FollowButton({
                 : kyInstance.post(`/api/users/${userId}/followers`),
         onMutate: async () => {
             await queryClient.cancelQueries({ queryKey });
-
+            console.log("Showing toast..."); // Debugging log
+        toast({
+            variant:"default",
+            title: `Following ${userId}`,
+        });
             const previousState = queryClient.getQueryData<FollowerInfo>(queryKey);
 
             queryClient.setQueryData<FollowerInfo>(queryKey, () => ({
@@ -40,6 +44,7 @@ export default function FollowButton({
                     (previousState?.isFollowedByUser ? -1 : 1),
                 isFollowedByUser: !previousState?.isFollowedByUser,
             }));
+            
 
             return { previousState };
         },

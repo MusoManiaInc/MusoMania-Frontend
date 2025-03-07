@@ -11,7 +11,7 @@ import UserAvatar from "./UserAvatar";
 
 export default function TrendsSidebar() {
     return (
-        <div className="sticky top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80">
+        <div className="sticky top-[5.25rem] hidden h-fit w-full flex-none space-y-5 md:block ">
             <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
                 <WhoToFollow />
                 <TrendingTopics />
@@ -41,7 +41,7 @@ async function WhoToFollow() {
     });
 
     return (
-        <div className="space-y-5 rounded-2xl bg-card p-5 shadow-sm">
+        <div className="space-y-5 w-full p-5 ">
             <div className="text-xl font-bold">Who to follow</div>
             {usersToFollow.map((user) => (
                 <div key={user.id} className="flex items-center justify-between gap-3">
