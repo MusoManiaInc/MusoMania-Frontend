@@ -67,6 +67,16 @@ model Post {
   @@map("posts")
 }
 
+model Report {
+  id                  String         @id @default(cuid())
+  postId              String?
+  userId              String
+  reason              String
+  createdAt DateTime @default(now())
+
+  @@map("reports")
+}
+
 model Media {
   id                  String         @id @default(cuid())
   postId String?

@@ -8,6 +8,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { deletePost } from "./actions";
+import { reportPost } from "./actions";
 
 export function useDeletePostMutation() {
     const { toast } = useToast();
@@ -58,3 +59,51 @@ export function useDeletePostMutation() {
 
     return mutation;
 }
+
+export function useReportPostMutation() {
+    const { toast } = useToast();
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation({
+        mutationFn: ({ postId, reason }: { postId: string; reason: string }) => reportPost(postId, reason),
+        onMutate: async ({ postId, reason }) => {
+            const queryFilter: QueryFilters = { queryKey: ["post-feed"] };
+
+            await queryClient.cancelQueries(queryFilter);
+
+            queryClient.setQueriesData<InfiniteData<PostsPage, string | null>>(
+                queryFilter,
+                (oldData) => {
+                    if (!oldData) return;
+
+                    return {
+                        pageParams: oldData.pageParams,
+                        pages: oldData.pages.map((page) => ({
+                            nextCursor: page.nextCursor,
+                            posts: page.posts.map((p) =>
+                                p.id === postId ? { ...p, isReported: true } : p,
+                            ),
+                        })),
+                    };
+                },
+            );
+
+            return { postId, reason };
+        },
+        onSuccess: (_, { reason }) => {
+            toast({
+                description: `Post reported for ${reason}`,
+            });
+        },
+        onError(error) {
+            console.error(error);
+            toast({
+                variant: "destructive",
+                description: "Failed to report post. Please try again.",
+            });
+        },
+    });
+
+    return mutation;
+}
+

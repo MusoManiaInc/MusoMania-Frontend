@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import UserAvatar from "../UserAvatar";
 import PostMoreButton from "./PostMoreButton";
+import PostReportButton from "./PostReportButton";
 
 interface PostProps {
   post: PostData;
@@ -49,6 +50,13 @@ export default function Post({ post }: PostProps) {
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
       )}
+      <div>
+      {post.user.id !== user.id && (
+        <PostReportButton
+        post={post}
+      />
+      )}
+      </div>
     </article>
   );
 }
