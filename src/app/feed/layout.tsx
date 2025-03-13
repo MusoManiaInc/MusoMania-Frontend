@@ -7,6 +7,8 @@ import Navbar from "./Navbar";
 
 import SessionProvider from "./SessionProvider";
 import { Toaster } from "@/components/ui/toaster";
+import ProfileSection from "@/components/profile/profile";
+import TrendsSidebar from "@/components/TrendsSidebar";
 
 export default async function Layout({
     children,
@@ -23,6 +25,9 @@ export default async function Layout({
                 <div className="mx-auto flex w-full justify-between ">
                     <MenuBar session={session}/>
                     {children}
+                    <ProfileSection session={session} >
+                        <TrendsSidebar />
+                    </ProfileSection>
                     <Toaster />
                 </div>
             </div>

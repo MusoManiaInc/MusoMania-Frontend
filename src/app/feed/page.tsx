@@ -51,9 +51,7 @@ export default async function Home() {
                 
                 
             </div>
-            <ProfileSection session={session} >
-                <TrendsSidebar />
-            </ProfileSection>
+            
             
 
         </main>
