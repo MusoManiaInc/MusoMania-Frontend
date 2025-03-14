@@ -44,12 +44,6 @@ const AdminProfile = ({  session, children}: Props) => {
           </div>
           <div className="flex items-center gap-2">
               <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
-                <MessageCircleMore className="!w-5 !h-5 text-gray-700"/>
-              </Button>
-              <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
-                <Bell className="!w-5 !h-5 text-gray-700"/>
-              </Button>
-              <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
                 <Settings className="!w-5 !h-5 text-gray-700"/>
               </Button>
           </div>

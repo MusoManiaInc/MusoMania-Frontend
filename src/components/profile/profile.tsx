@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProfileSection = ({  session}: Props) => {
+const ProfileSection = ({session}: Props) => {
   const { user, session:contextSession } = useSession();
 
 
