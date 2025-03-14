@@ -8,6 +8,8 @@ import TrendsSidebar from "@/components/TrendsSidebar";
 import SessionProvider from "../feed/SessionProvider";
 import MenuBar from "../feed/MenuBar";
 import AdminProfile from "@/components/profile/admin-profile";
+import TopUserList from "@/components/users/top-user-list";
+import { fetchListOfTopUsers } from "@/actions";
 
 export default async function Layout({
     children,
@@ -15,7 +17,7 @@ export default async function Layout({
     children: React.ReactNode;
 }) {
     const session = await validateRequest();
-
+    const countOfTopUsers = await fetchListOfTopUsers()
     if (!session.user) redirect("/login");
 
     return (
@@ -24,7 +26,9 @@ export default async function Layout({
                 <div className="mx-auto flex w-full justify-between ">
                     <MenuBar session={session}/>
                         {children}
-                        <AdminProfile session={session}/>
+                        <AdminProfile session={session}>
+                            <TopUserList users={countOfTopUsers}/>
+                        </AdminProfile>
                     <Toaster />
                 </div>
             </div>

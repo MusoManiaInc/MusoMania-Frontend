@@ -7,7 +7,7 @@ const Reports = (props: Props) => {
     <main className="flex w-full min-w-0">
             <div className="w-full min-w-0  bg-[#f9fbfc]">
                 
-                dfsd
+                Reports Page
                 
                 
             </div>

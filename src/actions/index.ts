@@ -22,3 +22,16 @@ export const fetchCountOfActiveUsers = async () => {
         return countOfActiveUsers;
 
 }
+export const fetchListOfTopUsers = async () => {
+
+    const listOfTopUsers = await prisma.user.findMany({
+        take:5,
+        orderBy:{
+            followers:{_count:"desc"}
+        },
+        include:{
+            followers:true
+        }
+    })
+    return listOfTopUsers;
+}
