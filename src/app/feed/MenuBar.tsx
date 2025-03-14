@@ -79,7 +79,7 @@ export default function MenuBar({ className, session }: MenuBarProps) {
     }, []);
 
     return (
-        <div className="w-[80px] lg:w-[300px] bg-[#5046E4] sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
+        <div className="w-[80px] lg:w-[350px] bg-[#5046E4] sticky top-0 h-screen border-r border-gray-100 flex flex-col px-4  justify-between">
             <div className="pt-6">
                 <div>
                     <Link href="/" className="flex z-40 font-semibold items-center justify-center lg:justify-start gap-2">
