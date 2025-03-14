@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProfileSection = ({  session}: Props) => {
+const AdminProfile = ({  session, children}: Props) => {
   const { user, session:contextSession } = useSession();
 
 
@@ -54,9 +54,10 @@ const ProfileSection = ({  session}: Props) => {
               </Button>
           </div>
         </div>
+        {children}
       </div>
     </div>
   );
 };
 
-export default ProfileSection;
+export default AdminProfile;
