@@ -9,6 +9,7 @@ import Link from "next/link";
 import UserAvatar from "../UserAvatar";
 import PostMoreButton from "./PostMoreButton";
 import PostReportButton from "./PostReportButton";
+import LikeButton from "./LikeButton";
 
 interface PostProps {
   post: PostData;
@@ -34,6 +35,7 @@ export default function Post({ post }: PostProps) {
             <Link
               href={`feed/posts/${post.id}`}
               className="block text-sm text-muted-foreground hover:underline"
+              suppressHydrationWarning
             >
               {formatRelativeDate(post.createdAt)}
             </Link>
@@ -50,6 +52,13 @@ export default function Post({ post }: PostProps) {
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
       )}
+      <LikeButton
+        postId={post.id}
+        initialState={{
+          likes: post._count.likes,
+          isLikedByUser: post.likes.some((like) => like.userId === user.id),
+        }}
+      />
       <div>
       {post.user.id !== user.id && (
         <PostReportButton
