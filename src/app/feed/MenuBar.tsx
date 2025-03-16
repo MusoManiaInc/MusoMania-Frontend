@@ -102,8 +102,8 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                 </div> */}
 
                 <div className="mt-6 flex flex-col gap-4">
-                    {adminMenuItems.map((item) => (
-                        <AdminMenuItem key={item.href} title={item.title} href={item.href} icon={item.icon} />
+                    {feedMenuItems.map((item) => (
+                        <MenuItemFeed key={item.href} title={item.title} href={item.href} icon={item.icon} />
                     ))}
                 </div>
             </div>

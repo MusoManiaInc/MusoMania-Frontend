@@ -3,6 +3,7 @@
 
 import { useSession } from "@/app/feed/SessionProvider";
 import prisma from "@/lib/prisma";
+import { endOfMonth, startOfMonth, subMonths } from "date-fns";
 
 export const fetchCountOfAllUsers = async () => {
 
@@ -35,3 +36,32 @@ export const fetchListOfTopUsers = async () => {
     })
     return listOfTopUsers;
 }
+
+export const fetchUsersByMonth = async () => {
+    
+    const now = new Date();
+    const months = Array.from({ length: 12 }, (_, index) => {
+        const date = new Date(now.getFullYear(), index,1); 
+        return {
+            month: date.toLocaleString("en-US", { month: "long" }), 
+            startDate: startOfMonth(date),
+            endDate: endOfMonth(date),
+        };
+    }); 
+
+    const usersByMonth = await Promise.all(
+        months.map(async ({ month, startDate, endDate }) => {
+            const desktop = await prisma.user.count({
+                where: {
+                    createdAt: {
+                        gte: startDate,
+                        lt: endDate,
+                    },
+                },
+            });
+            return { month, desktop };
+        })
+    );
+
+    return usersByMonth;
+};

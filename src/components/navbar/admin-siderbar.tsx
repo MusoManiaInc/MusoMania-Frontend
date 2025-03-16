@@ -3,12 +3,12 @@
 import LogoComponent from "@/components/logo/logo";
 import { Button } from "@/components/ui/button";
 import MenuItemFeed from "@/components/navbar/menu-item";
-import { feedMenuItems } from "@/constants";
+import { adminMenuItems, feedMenuItems } from "@/constants";
 import { Search, LogOut, UserRound, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Session } from "lucia";
-import { logout } from "../(auth)/actions";
+
 
 import { AnimatePresence,motion } from 'framer-motion';
 
@@ -41,6 +41,8 @@ import { Input } from "@/components/ui/input";
 
 import UserAvatar from "@/components/UserAvatar";
 import { useSession } from "@/app/feed/SessionProvider";
+import AdminMenuItem from "./admin-menu-item";
+import { logout } from "@/app/(auth)/actions";
 
 
 interface MenuBarProps {
@@ -90,8 +92,8 @@ export default function AdminMenuBar({ className, session }: MenuBarProps) {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-4">
-                    {feedMenuItems.map((item) => (
-                        <MenuItemFeed key={item.href} title={item.title} href={item.href} icon={item.icon} />
+                    {adminMenuItems.map((item) => (
+                        <AdminMenuItem key={item.href} title={item.title} href={item.href} icon={item.icon} />
                     ))}
                 </div>
             </div>

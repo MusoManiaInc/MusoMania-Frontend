@@ -5,12 +5,14 @@ import { validateRequest } from "@/auth";
 import { Flag, Plus, Search, UserCheck, Users } from "lucide-react";
 import Link from "next/link";
 import ProfileSection from "@/components/profile/profile";
-import { fetchCountOfActiveUsers, fetchCountOfAllUsers } from "@/actions";
+import { fetchCountOfActiveUsers, fetchCountOfAllUsers, fetchUsersByMonth } from "@/actions";
+import { AdminLineChart } from "@/components/admin/admin-line-chart";
 
 export default async function AdminHome() {
     const session = await validateRequest();
     const countOfUsers = await fetchCountOfAllUsers();
     const countOfActiveUsers = await fetchCountOfActiveUsers()
+    const countOfRecentUsers = await fetchUsersByMonth();
     return (
 
         <main className="flex w-full min-w-0 bg-[#f9fbfc]">
@@ -53,6 +55,9 @@ export default async function AdminHome() {
                             <span className="text-2xl font-semibold">{countOfActiveUsers}</span>    
                         </div>
                     </div>
+                </div>
+                <div className="pt-5">
+                    <AdminLineChart numberOfRecentUsers={countOfRecentUsers}/>
                 </div>
             </div>
         </main>

@@ -10,6 +10,7 @@ import MenuBar from "../feed/MenuBar";
 import AdminProfile from "@/components/profile/admin-profile";
 import TopUserList from "@/components/users/top-user-list";
 import { fetchListOfTopUsers } from "@/actions";
+import AdminMenuBar from "@/components/navbar/admin-siderbar";
 
 export default async function Layout({
     children,
@@ -24,7 +25,7 @@ export default async function Layout({
         <SessionProvider value={session}>
             <div className="flex min-h-screen flex-col">
                 <div className="mx-auto flex w-full justify-between ">
-                    <MenuBar session={session}/>
+                    <AdminMenuBar session={session}/>
                         {children}
                         <AdminProfile session={session}>
                             <TopUserList users={countOfTopUsers}/>

@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProfileSection = ({session}: Props) => {
+const ProfileSection = ({session,children}: Props) => {
   const { user, session:contextSession } = useSession();
 
 
@@ -53,7 +53,9 @@ const ProfileSection = ({session}: Props) => {
                 <Settings className="!w-5 !h-5 text-gray-700"/>
               </Button>
           </div>
+          
         </div>
+        {children}
       </div>
     </div>
   );
