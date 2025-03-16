@@ -21,7 +21,6 @@ export function middleware(request: NextRequest) {
   if (!token) {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
-
   // Otherwise allow the request
   return NextResponse.next();
 }
@@ -29,3 +28,4 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/dashboard/:path*"], // Paths you want to protect
 };
+

@@ -14,7 +14,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ProfileSection = ({session,children}: Props) => {
+const AdminProfile = ({  session, children}: Props) => {
   const { user, session:contextSession } = useSession();
 
 
@@ -44,16 +44,9 @@ const ProfileSection = ({session,children}: Props) => {
           </div>
           <div className="flex items-center gap-2">
               <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
-                <MessageCircleMore className="!w-5 !h-5 text-gray-700"/>
-              </Button>
-              <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
-                <Bell className="!w-5 !h-5 text-gray-700"/>
-              </Button>
-              <Button className="rounded-full bg-transparent hover:bg-gray-100 px-2 py-1 border border-gray-200">
                 <Settings className="!w-5 !h-5 text-gray-700"/>
               </Button>
           </div>
-          
         </div>
         {children}
       </div>
@@ -61,4 +54,4 @@ const ProfileSection = ({session,children}: Props) => {
   );
 };
 
-export default ProfileSection;
+export default AdminProfile;
