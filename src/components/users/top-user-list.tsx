@@ -2,6 +2,7 @@
 import { User } from '@prisma/client';
 import React from 'react'
 import UserAvatar from '../UserAvatar';
+import Link from 'next/link';
 
 type Props = {
     users: User[];
@@ -18,9 +19,9 @@ const TopUserList = ({users}: Props) => {
                 <li className="flex items-center justify-start gap-3">
                     <UserAvatar avatarUrl={item.avatarUrl} className="flex-none" />
                         <div>
-                            <p className="line-clamp-1 break-all font-semibold hover:underline">
+                            <Link href={`/feed/users/${item.username}`} className="line-clamp-1 break-all font-semibold hover:underline">
                                 {item.displayName}
-                            </p>
+                            </Link>
                             <p className="line-clamp-1 break-all text-muted-foreground">
                                 @{item.username}
                             </p>
