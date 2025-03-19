@@ -29,7 +29,9 @@ model User {
   following    Follow[]  @relation("Following")
   followers    Follow[]  @relation("Followers")
   createdAt DateTime @default(now())
-
+  likes        Like[]
+  bookmarks             Bookmark[]
+  comments     Comment[]
   @@map("users")
 }
 
@@ -61,7 +63,9 @@ model Post {
   userId              String
   user                User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   attachments Media[]
-
+  likes       Like[]
+  bookmarks           Bookmark[]
+  comments    Comment[]
   createdAt DateTime @default(now())
 
   @@map("posts")
@@ -93,4 +97,37 @@ enum MediaType {
   IMAGE
   VIDEO
 }
+model Comment {
+  id      String @id @default(cuid())
+  content String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId  String
+  post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+
+  @@map("comments")
+}
+
+model Like {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@map("likes")
+}
+model Bookmark {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@map("bookmarks")
+}
