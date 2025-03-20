@@ -13,9 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { ArrowUpDown, Check, ChevronDown, MoreHorizontal, MoveVertical } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -26,7 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+
 import {
   Table,
   TableBody,
@@ -38,14 +36,31 @@ import {
 import { Report } from "@/app/types"
 import { useToast } from "../ui/use-toast"
 import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+
 
 export function ReportsDataTable({reports}:{reports:Report[]}) {
+  const statusOptions = ["Received", "Under Review", "Violating Policy", "Passed Review"];
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
-  
+  const [selectedReport, setSelectedReport] = React.useState<Report | null>(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
+  const [status, setStatus] = React.useState("Received");
   const columns: ColumnDef<Report>[] = [
     {
       id: "select",
@@ -230,14 +245,15 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSelectedReport(row.original);
+                    setOpenDialog(true);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -282,6 +298,62 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
           </Button>
         </div>
       </div>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Report Details</DialogTitle>
+            <DialogDescription>View report details below.</DialogDescription>
+          </DialogHeader>
+          {selectedReport && (
+            <div className="grid gap-4 py-4">
+                <form className="flex flex-col gap-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Post ID</Label>
+                        <Input readOnly value={selectedReport.postId} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">User ID</Label>
+                        <Input readOnly value={selectedReport.userId} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Reason</Label>
+                        <Input readOnly value={selectedReport.reason} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Created At</Label>
+                        <Input readOnly value={new Date(selectedReport.createdAt).toLocaleString()} className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label className="text-right">Process</Label>
+                        <div className="col-span-3">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="w-full justify-between">
+                                    {status}
+                                    <ChevronDown className='h-3 w-3 opacity-50' />
+                                </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="!w-[300px]">
+                                {statusOptions.map((option) => (
+                                    <DropdownMenuItem key={option} onClick={() => setStatus(option)} className="justify-between">
+                                    {option}
+                                    {status === option && <Check className="w-4 h-4 text-[#5046E4]" />}
+                                    </DropdownMenuItem>
+                                ))}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                            </div>
+                    </div>
+                </form>
+              
+            </div>
+          )}
+          <DialogFooter>
+            <Button onClick={() => setOpenDialog(false)} className="">Save</Button>
+            <Button onClick={() => setOpenDialog(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
