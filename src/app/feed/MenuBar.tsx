@@ -114,7 +114,7 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                                 <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
                             <div className="grid">
                                 <span className="font-semibold text-white hidden lg:grid">{user.displayName}</span>
-                                <span className="text-gray-300 text-sm hidden lg:grid">{user.email}</span>
+                                <span className="text-gray-300 text-sm hidden lg:grid w-full truncate">{user.email}</span>
                             </div>
                         </div>
                         <div className="flex lg:hidden">
