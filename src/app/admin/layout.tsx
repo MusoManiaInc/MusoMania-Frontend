@@ -2,7 +2,7 @@ import { validateRequest } from "@/auth";
 
 import { redirect, usePathname } from "next/navigation";
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import ProfileSection from "@/components/profile/profile";
 import TrendsSidebar from "@/components/TrendsSidebar";
 import SessionProvider from "../feed/SessionProvider";
@@ -27,10 +27,10 @@ export default async function Layout({
                 <div className="mx-auto flex w-full justify-between ">
                     <AdminMenuBar session={session}/>
                         {children}
+                        <Toaster />
                         <AdminProfile session={session}>
                             <TopUserList users={countOfTopUsers}/>
                         </AdminProfile>
-                    <Toaster />
                 </div>
             </div>
         </SessionProvider>

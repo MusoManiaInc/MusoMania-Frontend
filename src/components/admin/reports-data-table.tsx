@@ -36,18 +36,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Report } from "@/app/types"
-
-
-
-
-
+import { useToast } from "../ui/use-toast"
+import { toast } from "sonner"
 
 export function ReportsDataTable({reports}:{reports:Report[]}) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
-  const allReports = React.useMemo(() => reports, [reports]);
+  
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
   const columns: ColumnDef<Report>[] = [
     {
@@ -81,7 +78,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
     },
     {
         accessorKey: "userId",
-        header: "User Id",
+        header: "Reporter User Id",
         cell: ({ row }) => (
           <div className="capitalize">{row.getValue("userId")}</div>
         ),
@@ -89,9 +86,24 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
     {
         accessorKey: "reason",
         header: "Reason",
-        cell: ({ row }) => (
-          <div className="capitalize">{row.getValue("reason")}</div>
-        ),
+        cell: ({ row }) => {
+        const reason = row.getValue("reason") as string;
+        
+        const bgColor = reason === "Spam"
+            ? "bg-red-200 text-red-500 py-0.5 w-[60px]"
+            : reason === "Inappropriate"
+            ? "bg-blue-200 text-blue-500 py-0.5 w-[100px]"
+            : reason === "Other"
+            ? "bg-gray-300 text-gray-500 py-0.5 w-[60px]"
+            : "bg-transparent";
+
+        return (
+            <div className={`capitalize text-center flex justify-center  rounded-full ${bgColor}`}>
+                {reason}
+            </div>
+        );
+        },
+
     },
     {
         accessorKey: "createdAt",
@@ -106,7 +118,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const payment = row.original
+        const report = row.original
   
         return (
           <DropdownMenu>
@@ -119,13 +131,15 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(payment.id)}
+                onClick={() => {
+                    toast("Report Id Copied")
+                    navigator.clipboard.writeText(report.id)
+                }}
+                className="cursor-pointer"
+
               >
-                Copy payment ID
+                Copy report ID
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )
@@ -198,7 +212,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -219,7 +233,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
