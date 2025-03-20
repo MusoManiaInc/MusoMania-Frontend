@@ -20,17 +20,17 @@ export default function Notification({notification} : NotificationProps) {
         FOLLOW : {
             message: `${notification.issuer.displayName} followed you!`,
             icon: <User2 className="size-7 text-primary" />,
-            href: `/users/${notification.issuer.username}`
+            href: `/feed/users/${notification.issuer.username}`
         },
         COMMENT: {
             message: `${notification.issuer.displayName} commented on your post!`,
             icon: <MessageCircle className="size-7 text-primary" />,
-            href: `/posts/${notification.postId}`
+            href: `/feed/posts/${notification.postId}`
         },
         LIKE: {
             message: `${notification.issuer.displayName} liked your post!`,
             icon: <Heart className="size-7 text-red-500 fill-red-500" />,
-            href: `/users/${notification.issuer.username}`
+            href: `/feed/users/${notification.issuer.username}`
         },
     };
 
