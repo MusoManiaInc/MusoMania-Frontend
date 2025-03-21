@@ -60,7 +60,12 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
   const [selectedReport, setSelectedReport] = React.useState<Report | null>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
-  const [status, setStatus] = React.useState(selectedReport?.status || "Received" );
+  const [status, setStatus] = React.useState(selectedReport?.status );
+  console.log(selectedReport?.status)
+  const handleStatusChange = (newStatus: string) => {
+    setStatus(newStatus); 
+
+  };
   const columns: ColumnDef<Report>[] = [
     {
       id: "select",
@@ -273,6 +278,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                   className="cursor-pointer"
                   onClick={() => {
                     setSelectedReport(row.original);
+                    setStatus(row.original.status);
                     setOpenDialog(true);
                   }}
                 >
@@ -354,7 +360,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="w-full justify-between">
-                              {selectedReport.status} 
+                              {status} 
                               <ChevronDown className="h-3 w-3 opacity-50" />
                             </Button>
                           </DropdownMenuTrigger>
@@ -362,11 +368,11 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                             {statusOptions.map((option) => (
                               <DropdownMenuItem 
                                 key={option} 
-                                onClick={() => setStatus(option)} 
+                                onClick={() => handleStatusChange(option)}
                                 className="justify-between cursor-pointer"
                               >
                                 {option}
-                                {selectedReport.status === option && <Check className="w-4 h-4 text-[#5046E4]" />}
+                                {status === option &&  <Check className="w-4 h-4 text-[#5046E4]" />}
                               </DropdownMenuItem>
                             ))}
                           </DropdownMenuContent>
