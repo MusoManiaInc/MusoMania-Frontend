@@ -43,6 +43,7 @@ export async function reportPost(postId: string, reason: string) {
             postId,
             userId: user.id,
             reason,
+            status:"Received"
         },
     });
 

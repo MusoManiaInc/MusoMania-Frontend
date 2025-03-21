@@ -4,4 +4,5 @@ export type Report = {
     userId: string
     reason: "Spam" | "Inappropriate" | "Other"
     createdAt: Date
+    status: "Received" | "Under Review" | "Violation" | "Passed" 
 }
