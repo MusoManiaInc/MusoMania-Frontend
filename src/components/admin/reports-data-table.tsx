@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, Check, ChevronDown, MoreHorizontal, MoveVertical } from "lucide-react"
+import { ArrowUpDown, Check, ChevronDown, Loader2Icon, MoreHorizontal, MoveVertical } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -48,19 +48,41 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
+import { useReportPostMutation } from "../posts/mutations"
+import { useUpdateReportPostMutation } from "./actions/mutations"
 
 
 export function ReportsDataTable({reports}:{reports:Report[]}) {
-  const statusOptions = ["Received", "Under Review", "Violating Policy", "Passed Review"];
+  const statusOptions = ["Received", "Under Review", "Violation", "Passed"];
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const [selectedReport, setSelectedReport] = React.useState<Report | null>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
-  const [status, setStatus] = React.useState("Received");
+  const [status, setStatus] = React.useState(selectedReport?.status);
+  
+  console.log("Selected Report:", selectedReport)
+  const mutation = useUpdateReportPostMutation();
+  const handleStatusChange = (newStatus: string) => {
+    setStatus(newStatus); 
+  };
+  const handleUpdateReport = (report:Report) => {
+    try {
+      setIsLoading(true);
+      mutation.mutateAsync({reportId:report.id, status:report.status})
+      toast("Report was successfully updated")
+      window.location.reload();
+      setOpenDialog(false)
+    } catch (error) {
+      console.log("Error updating the report",error)
+      toast(`Error updating the report:${error}`)
+    }finally{
+      setIsLoading(false);
+    }
+  }
   const columns: ColumnDef<Report>[] = [
     {
       id: "select",
@@ -105,11 +127,11 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
         const reason = row.getValue("reason") as string;
         
         const bgColor = reason === "Spam"
-            ? "bg-red-200 text-red-500 py-0.5 w-[60px]"
+            ? "bg-red-200 text-red-700 py-0.5 w-[60px]"
             : reason === "Inappropriate"
-            ? "bg-blue-200 text-blue-500 py-0.5 w-[100px]"
+            ? "bg-blue-200 text-blue-700 py-0.5 w-[100px]"
             : reason === "Other"
-            ? "bg-gray-300 text-gray-500 py-0.5 w-[60px]"
+            ? "bg-gray-200 text-gray-700 py-0.5 w-[60px]"
             : "bg-transparent";
 
         return (
@@ -120,6 +142,31 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
         },
 
     },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+      const reason = row.getValue("status") as string;
+      
+      const bgColor = reason === "Received"
+        ? "bg-gray-200 text-gray-700 py-0.5 w-[80px]"
+        : reason === "Under Review"
+        ? "bg-blue-200 text-blue-700 py-0.5 w-[110px]" 
+        : reason === "Violation"
+        ? "bg-red-200 text-red-700 py-0.5 w-[90px]" 
+        : reason === "Passed"
+        ? "bg-green-200 text-green-700 py-0.5 w-[80px]" 
+        : "bg-transparent";
+
+
+      return (
+          <div className={`capitalize text-center flex justify-center  rounded-full ${bgColor}`}>
+              {reason}
+          </div>
+      );
+      },
+
+  },
     {
         accessorKey: "createdAt",
         header: "Created At",
@@ -248,6 +295,7 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                   className="cursor-pointer"
                   onClick={() => {
                     setSelectedReport(row.original);
+                    setStatus(row.original.status);
                     setOpenDialog(true);
                   }}
                 >
@@ -324,32 +372,41 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
                         <Input readOnly value={new Date(selectedReport.createdAt).toLocaleString()} className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Process</Label>
-                        <div className="col-span-3">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="w-full justify-between">
-                                    {status}
-                                    <ChevronDown className='h-3 w-3 opacity-50' />
-                                </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="!w-[300px]">
-                                {statusOptions.map((option) => (
-                                    <DropdownMenuItem key={option} onClick={() => setStatus(option)} className="justify-between">
-                                    {option}
-                                    {status === option && <Check className="w-4 h-4 text-[#5046E4]" />}
-                                    </DropdownMenuItem>
-                                ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            </div>
+                      <Label className="text-right">Status</Label>
+                      <div className="col-span-3">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="w-full justify-between">
+                              {status} 
+                              <ChevronDown className="h-3 w-3 opacity-50" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="!w-[300px]">
+                            {statusOptions.map((option) => (
+                              <DropdownMenuItem 
+                                key={option} 
+                                onClick={() => handleStatusChange(option)}
+                                className="justify-between cursor-pointer"
+                              >
+                                {option}
+                                {status === option &&  <Check className="w-4 h-4 text-[#5046E4]" />}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </div>
                 </form>
               
             </div>
           )}
           <DialogFooter>
-            <Button onClick={() => setOpenDialog(false)} className="">Save</Button>
+            <Button 
+              onClick={() => handleUpdateReport({...selectedReport,status})} 
+              className="bg-[#5046E4] hover:bg-[#372f9b]"
+              disabled={isLoading}>
+                {isLoading ? (<Loader2Icon className="animate-spin"/>) : 'Save'}
+            </Button>
             <Button onClick={() => setOpenDialog(false)}>Close</Button>
           </DialogFooter>
         </DialogContent>
