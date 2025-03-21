@@ -3,27 +3,23 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 
-export async function updatePost(postId: string, reason: string) {
+export async function updateReportStatus(reportId: string, status: string) {
     const { user } = await validateRequest();
 
     if (!user) throw new Error("Unauthorized");
 
-    const post = await prisma.post.findUnique({
-        where: { id: postId },
+    const report = await prisma.report.findUnique({
+        where: { id: reportId },
     });
 
-    if (!post) throw new Error("Post not found");
+    if (!report) throw new Error("Report not found");
 
-    if (post.userId === user.id) throw new Error("Cannot report own post");
-
-    const report = await prisma.report.create({
+    const updatedReport = await prisma.report.update({
+        where: { id:reportId },
         data: {
-            postId,
-            userId: user.id,
-            reason,
-            status:"Received"
+            status:status
         },
     });
 
-    return report;
+    return updatedReport;
 }

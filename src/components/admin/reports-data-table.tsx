@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, Check, ChevronDown, MoreHorizontal, MoveVertical } from "lucide-react"
+import { ArrowUpDown, Check, ChevronDown, Loader2Icon, MoreHorizontal, MoveVertical } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
@@ -48,7 +48,8 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
+import { useReportPostMutation } from "../posts/mutations"
+import { useUpdateReportPostMutation } from "./actions/mutations"
 
 
 export function ReportsDataTable({reports}:{reports:Report[]}) {
@@ -59,13 +60,29 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [selectedReport, setSelectedReport] = React.useState<Report | null>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 5 });
-  const [status, setStatus] = React.useState(selectedReport?.status );
-  console.log(selectedReport?.status)
+  const [status, setStatus] = React.useState(selectedReport?.status);
+  
+  console.log("Selected Report:", selectedReport)
+  const mutation = useUpdateReportPostMutation();
   const handleStatusChange = (newStatus: string) => {
     setStatus(newStatus); 
-
   };
+  const handleUpdateReport = (report:Report) => {
+    try {
+      setIsLoading(true);
+      mutation.mutateAsync({reportId:report.id, status:report.status})
+      toast("Report was successfully updated")
+      window.location.reload();
+      setOpenDialog(false)
+    } catch (error) {
+      console.log("Error updating the report",error)
+      toast(`Error updating the report:${error}`)
+    }finally{
+      setIsLoading(false);
+    }
+  }
   const columns: ColumnDef<Report>[] = [
     {
       id: "select",
@@ -384,7 +401,12 @@ export function ReportsDataTable({reports}:{reports:Report[]}) {
             </div>
           )}
           <DialogFooter>
-            <Button onClick={() => setOpenDialog(false)} className="">Save</Button>
+            <Button 
+              onClick={() => handleUpdateReport({...selectedReport,status})} 
+              className="bg-[#5046E4] hover:bg-[#372f9b]"
+              disabled={isLoading}>
+                {isLoading ? (<Loader2Icon className="animate-spin"/>) : 'Save'}
+            </Button>
             <Button onClick={() => setOpenDialog(false)}>Close</Button>
           </DialogFooter>
         </DialogContent>

@@ -1,44 +1,51 @@
-import { reportPost } from "@/components/posts/actions";
-import { PostsPage } from "@/lib/types";
-import { InfiniteData, QueryFilters, useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePost } from ".";
+import { reportPost } from "@/components/posts/actions"; 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateReportStatus } from ".";
 
-export function useReportPostMutation() {
-    
+
+export function useUpdateReportPostMutation() {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-        mutationFn: ({ postId, status }: { postId: string; status: string }) => updatePost(postId, status),
-        onMutate: async ({ postId, status }) => {
-            const queryFilter: QueryFilters = { queryKey: ["post-feed"] };
+        mutationFn: ({ reportId, status }: { reportId: string; status: string }) => updateReportStatus(reportId, status),
+        onMutate: async ({ reportId, status }) => {
+            // Cancel any outgoing refetches of the "report" query (if applicable)
+            const queryFilter = { queryKey: ["reports"] };
 
             await queryClient.cancelQueries(queryFilter);
 
-            queryClient.setQueriesData<InfiniteData<PostsPage, string | null>>(
-                queryFilter,
-                (oldData) => {
-                    if (!oldData) return;
+            // Get the previous state of the report data
+            const previousData = queryClient.getQueryData(queryFilter);
 
-                    return {
-                        pageParams: oldData.pageParams,
-                        pages: oldData.pages.map((page) => ({
-                            nextCursor: page.nextCursor,
-                            posts: page.posts.map((p) =>
-                                p.id === postId ? { ...p, isReported: true } : p,
-                            ),
-                        })),
-                    };
-                },
-            );
+            // Optimistically update the cache by updating the report's status
+            queryClient.setQueryData(queryFilter, (oldData) => {
+                if (!oldData) return;
 
-            return { postId, status };
+                return {
+                    ...oldData,
+                    reports: oldData.reports.map((report) =>
+                        report.id === reportId ? { ...report, status } : report
+                    ),
+                };
+            });
+
+            // Return context to be used in case of error (for rollback)
+            return { previousData, reportId, status };
         },
-        onSuccess: (_, { status }) => {
-            
+        onSuccess: (_, { status, reportId }) => {
+            // On success, you can refetch or invalidate the reports data to ensure it's fresh
+            queryClient.invalidateQueries(["reports"]);
         },
-        onError(error) {
+        onError: (error, { reportId, status }, context) => {
+            // On error, revert the optimistic update and restore previous data
             console.error(error);
-            
+            if (context?.previousData) {
+                queryClient.setQueryData(["reports"], context.previousData);
+            }
+        },
+        onSettled: () => {
+            // Ensure the query is invalidated and refetched on mutation completion (success or error)
+            queryClient.invalidateQueries(["reports"]);
         },
     });
 
