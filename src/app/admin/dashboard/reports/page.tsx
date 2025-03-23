@@ -1,11 +1,24 @@
+"use client"
 import { fetchAllReports } from '@/actions/reports'
 import {ReportsDataTable} from '@/components/admin/reports-data-table'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 type Props = {}
 
-const Reports = async (props: Props) => {
-  const findAllReports = await fetchAllReports();
+const Reports =  (props: Props) => {
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const data = await fetchAllReports();
+        setReports(data);
+      } catch (error) {
+        console.error("Failed to fetch reports:", error);
+      }
+    }; 
+    fetchReports();
+  }, []);
   return (
     <main className="flex w-full min-w-0">
             <div className="w-full min-w-0  bg-[#f9fbfc]">
@@ -13,7 +26,7 @@ const Reports = async (props: Props) => {
                 <h1 className='text-4xl font-semibold'>Reports Page</h1> 
                 <span className='text-gray-600'>Configure all your reports</span>
               </div>
-                <ReportsDataTable reports={findAllReports}/>
+                <ReportsDataTable reports={reports}/>
             </div>
         </main>
   )
