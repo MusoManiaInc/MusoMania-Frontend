@@ -16,7 +16,7 @@ const Reports =  (props: Props) => {
       } catch (error) {
         console.error("Failed to fetch reports:", error);
       }
-    };
+    }; 
     fetchReports();
   }, []);
   return (
