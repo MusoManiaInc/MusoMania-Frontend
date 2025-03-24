@@ -1,4 +1,4 @@
-import { Music, Star, Guitar, Headphones, Drumstick, Bot, Piano, Disc3, AudioLines, Music2, Home, Bell, Mail, Bookmark, Flag } from "lucide-react";
+import { Music, Star, Guitar, Headphones, Drumstick, Bot, Piano, Disc3, AudioLines, Music2, Home, Bell, Mail, Bookmark, Flag, Search } from "lucide-react";
 import { Drum, Wind, Keyboard, Speaker } from "lucide-react";
 export const preferences = [
     {
@@ -112,9 +112,9 @@ export const feedMenuItems = [
         href: "/feed/notifications"
     },
     {
-        title: "Messages",
-        icon: <Mail className="h-5"/>,
-        href: "/feed/messages"
+        title: "Search",
+        icon: <Search className="h-5"/>,
+        href: "/feed/search"
     },
     {
         title: "Bookmarks",

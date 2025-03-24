@@ -13,10 +13,11 @@ type Props = {
     searchResults: UserData[];
     setSearchInput: (value: string) => void;
     setSearchResults: (value: UserData[]) => void;
-    loading:boolean
+    loading:boolean;
+    handleSearchPage: (value:string)=> void
 };
 
-const SearchBar = ({ searchInput, handleSearch, searchResults, loading,setSearchInput,setSearchResults }: Props) => {
+const SearchBar = ({ searchInput, handleSearch, searchResults, loading,setSearchInput,setSearchResults,handleSearchPage}: Props) => {
     const searchContainerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -42,7 +43,7 @@ const SearchBar = ({ searchInput, handleSearch, searchResults, loading,setSearch
         onChange={(e) => handleSearch(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            console.log("Search triggered for:", searchInput);
+            handleSearchPage(searchInput)
           }
         }}
       />
@@ -81,7 +82,7 @@ const SearchBar = ({ searchInput, handleSearch, searchResults, loading,setSearch
                     </div>
                 </Link>
             ))}
-            <Link href={`/feed/search?=${searchInput}`} className="px-4 py-1 hover:bg-zinc-100 duration-100 ease-linear">
+            <Link href={`/feed/search?query=${searchInput}`} className="px-4 py-1 hover:bg-zinc-100 duration-100 ease-linear">
                 <span className='text-sm text-zinc-500'>See more results for "{searchInput}"</span>
             </Link>
           </motion.div>

@@ -12,12 +12,15 @@ import { useState } from "react";
 import { UserData } from "@/lib/types";
 import { fetchQueriedUsers } from "@/actions/search";
 import SearchBar from "@/components/search-bar/search-bar";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
     const [searchInput, setSearchInput] = useState("");
     const [searchResults,setSearchResults] = useState<UserData[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    
     const fetchSearchData = async (value:string) => {
         if (!value.trim()) { 
           setSearchResults([]); 
@@ -36,15 +39,25 @@ export default function Home() {
       const handleSearch = (value:string) => {
         setSearchInput(value)
         fetchSearchData(value)
-    
+      }
+      const handleSearchPage = (value:string) => {
+        if (value.trim()) {
+          router.push(`/feed/search?query=${encodeURIComponent(value)}`);
+        }
       }
 
     return (
-
         <main className="flex w-full min-w-0">
             <div className="w-full min-w-0  bg-[#f2f4f5]">
                 <div className="flex justify-between items-center bg-white border-b  border-gray-200 p-4 gap-4">
-                    <SearchBar searchInput={searchInput} handleSearch={handleSearch} searchResults={searchResults} loading={isLoading} setSearchInput={setSearchInput} setSearchResults={setSearchResults}/>
+                    <SearchBar 
+                    searchInput={searchInput} 
+                    handleSearch={handleSearch} 
+                    searchResults={searchResults} 
+                    loading={isLoading} 
+                    setSearchInput={setSearchInput} 
+                    setSearchResults={setSearchResults} 
+                    handleSearchPage={handleSearchPage}/>
                 </div>
                 <div className="mt-5 px-4">
                     <PostEditor />
