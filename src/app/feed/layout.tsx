@@ -6,9 +6,10 @@ import MenuBar from "./MenuBar";
 import Navbar from "./Navbar";
 
 import SessionProvider from "./SessionProvider";
-import { Toaster } from "@/components/ui/toaster";
+
 import ProfileSection from "@/components/profile/profile";
 import TrendsSidebar from "@/components/TrendsSidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function Layout({
     children,

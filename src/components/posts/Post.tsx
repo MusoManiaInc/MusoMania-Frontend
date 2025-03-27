@@ -25,26 +25,36 @@ export default function Post({ post }: PostProps) {
   return (
     <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
       <div className="flex justify-between gap-3">
-        <div className="flex flex-wrap gap-3">
-          <Link href={`feed/users/${post.user.username}`}>
-            <UserAvatar avatarUrl={post.user.avatarUrl} />
-          </Link>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex flex-wrap gap-3 items-center">
+            <Link href={`feed/users/${post.user.username}`}>
+              <UserAvatar avatarUrl={post.user.avatarUrl} />
+            </Link>
+            <div>
+              <Link
+                href={`feed/users/${post.user.username}`}
+                className="block font-medium hover:underline"
+              >
+                {post.user.displayName}
+              </Link>
+              <Link
+                href={`feed/posts/${post.id}`}
+                className="block text-sm text-muted-foreground hover:underline"
+                suppressHydrationWarning
+              >
+                {formatRelativeDate(post.createdAt)}
+              </Link>
+            </div>
+          </div>
           <div>
-            <Link
-              href={`feed/users/${post.user.username}`}
-              className="block font-medium hover:underline"
-            >
-              {post.user.displayName}
-            </Link>
-            <Link
-              href={`feed/posts/${post.id}`}
-              className="block text-sm text-muted-foreground hover:underline"
-              suppressHydrationWarning
-            >
-              {formatRelativeDate(post.createdAt)}
-            </Link>
+            {post.user.id !== user.id && (
+              <PostReportButton
+              post={post}
+            />
+            )}
           </div>
         </div>
+        
         {post.user.id === user.id && (
           <PostMoreButton
             post={post}
@@ -56,34 +66,33 @@ export default function Post({ post }: PostProps) {
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
       )}
-      <div className="flex items-center gap-5">
-        <LikeButton
+      <div className="flex items-center justify-between">
+        <div className="flex items-center  gap-5">
+          <LikeButton
+            postId={post.id}
+            initialState={{
+              likes: post._count.likes,
+              isLikedByUser: post.likes.some((like) => like.userId === user.id),
+            }}
+          />
+          <CommentButton
+            post={post}
+            onClick={() => setShowComments(!showComments)}
+          />
+        </div>
+        <BookmarkButton
           postId={post.id}
           initialState={{
-            likes: post._count.likes,
-            isLikedByUser: post.likes.some((like) => like.userId === user.id),
+            isBookmarkedByUser: post.bookmarks.some(
+              (bookmark) => bookmark.userId === user.id,
+            ),
           }}
         />
-        <CommentButton
-          post={post}
-          onClick={() => setShowComments(!showComments)}
-        />
+        
       </div>
-      <BookmarkButton
-        postId={post.id}
-        initialState={{
-          isBookmarkedByUser: post.bookmarks.some(
-            (bookmark) => bookmark.userId === user.id,
-          ),
-        }}
-      />
-      <div>
-      {post.user.id !== user.id && (
-        <PostReportButton
-        post={post}
-      />
-      )}
-      </div>
+        
+      
+      
       {showComments && <Comments post={post} />}
     </article>
   );

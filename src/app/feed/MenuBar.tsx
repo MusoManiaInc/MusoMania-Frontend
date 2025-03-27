@@ -88,19 +88,6 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                         <span className="text-lg text-white hidden lg:inline">MusoMania</span>
                     </Link>
                 </div>
-                {/* <div className="block lg:hidden mt-8">
-                    <Button onClick={ ()=> setSearchDialogOpen(true)} className="bg-white outline-none hover:bg-gray-100 shadow-none border  rounded-xl ">
-                        <Search className="!w-4 !h-4 text-gray-800 "/>
-                    </Button>
-                </div>
-                <div className="relative hidden lg:block mt-12">
-                    <Search className="w-5 h-5 text-zinc-400 dark:text-zinc-700 absolute top-1/2 transform -translate-y-1/2 left-2" />
-                    <input
-                        placeholder="Search..."
-                        className="rounded-xl pl-9 outline-none dark:text-zinc-300 border border-gray-200 py-1 w-full"
-                    />
-                </div> */}
-
                 <div className="mt-6 flex flex-col gap-4">
                     {feedMenuItems.map((item) => (
                         <MenuItemFeed key={item.href} title={item.title} href={item.href} icon={item.icon} />
@@ -114,7 +101,7 @@ export default function MenuBar({ className, session }: MenuBarProps) {
                                 <UserAvatar avatarUrl={user?.avatarUrl} size={40} className="" />
                             <div className="grid">
                                 <span className="font-semibold text-white hidden lg:grid">{user.displayName}</span>
-                                <span className="text-gray-300 text-sm hidden lg:grid">{user.email}</span>
+                                <span className="text-gray-300 text-sm hidden lg:grid w-full truncate">{user.email}</span>
                             </div>
                         </div>
                         <div className="flex lg:hidden">

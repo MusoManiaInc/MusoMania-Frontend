@@ -26,7 +26,7 @@ export default function ReportPostDialog({
     const [isReporting, setIsReporting] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const mutation = useReportPostMutation();
+    
 
     function handleOpenChange(open: boolean) {
         if (!open) {

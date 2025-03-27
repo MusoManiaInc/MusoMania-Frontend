@@ -28,8 +28,8 @@ export default function RootLayout({
       <body >
         <NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />
         <ReactQueryProvider>
-          <Toaster />
             {children}
+            <Toaster />
         </ReactQueryProvider>
         
       </body>
