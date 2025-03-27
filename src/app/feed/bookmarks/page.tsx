@@ -15,6 +15,7 @@ export default function Page() {
                 </div>
                 <Bookmarks />
             </div>
+            <TrendsSidebar/>
         </main>
     );
 }
