@@ -144,4 +144,4 @@ enum NotificationType {
   LIKE
   FOLLOW
   COMMENT
-
+}
