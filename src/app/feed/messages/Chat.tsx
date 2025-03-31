@@ -7,6 +7,7 @@ import { Chat as StreamChat } from "stream-chat-react";
 import ChatChannel from "./ChatChannel";
 import ChatSidebar from "./ChatSidebar";
 import useInitializeChatClient from "./useInitializeChatClient";
+import "stream-chat-react/dist/css/v2/index.css";
 
 export default function Chat() {
     const chatClient = useInitializeChatClient();

@@ -10,11 +10,15 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["assets.aceternity.com", `${UPLOADTHING_APP_ID}.ufs.sh`], // Fixed dynamic domain
+    domains: [
+      "assets.aceternity.com",
+      `${UPLOADTHING_APP_ID}.ufs.sh`,
+      "utfs.io" // Added domain for utfs.io
+    ],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: `${UPLOADTHING_APP_ID}.ufs.sh`, // Ensures proper matching
+        hostname: `${UPLOADTHING_APP_ID}.ufs.sh`,
         pathname: "/f/*",
       },
     ],
@@ -26,5 +30,6 @@ const nextConfig: NextConfig = {
   },
   serverExternalPackages: ["@node-rs/argon2"],
 };
+
 
 export default nextConfig;
