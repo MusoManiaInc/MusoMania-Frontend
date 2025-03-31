@@ -2,6 +2,7 @@
 
 import { lucia } from "@/auth";
 import prisma from "@/lib/prisma";
+import streamServerClient from "@/lib/stream";
 import { signUpSchema, SignUpValues } from "@/lib/validation";
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
@@ -64,22 +65,25 @@ export async function signUp(
                     passwordHash,
                 },
             });
+            await streamServerClient.upsertUser({
+                id: userId,
+                username,
+                name: username,
+            });
         });
 
         const session = await lucia.createSession(userId, {});
         const sessionCookie = lucia.createSessionCookie(session.id);
-        // Await the cookies() call so that we have the proper cookie store object.
-        const cookieStore = await cookies();
-        cookieStore.set(
+        cookies().set(
             sessionCookie.name,
             sessionCookie.value,
             sessionCookie.attributes,
         );
 
-        return redirect("/feed");
+        return redirect("/");
     } catch (error) {
         if (isRedirectError(error)) throw error;
-        console.error(error);
+        console.log(error);
         return {
             error: "Something went wrong. Please try again.",
         };
