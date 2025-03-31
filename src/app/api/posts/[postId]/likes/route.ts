@@ -40,6 +40,7 @@ export async function GET(
             likes: post._count.likes,
             isLikedByUser: !!post.likes.length,
         };
+
         return Response.json(data);
     } catch (error) {
         console.error(error);
@@ -59,14 +60,14 @@ export async function POST(
         }
 
         const post = await prisma.post.findUnique({
-            where: {id: postId},
-            select:{
-                userId: true
-            }
-        })
+            where: { id: postId },
+            select: {
+                userId: true,
+            },
+        });
 
         if (!post) {
-            return Response.json({ error: "Post not found"}, {status: 404});
+            return Response.json({ error: "Post not found" }, { status: 404 });
         }
 
         await prisma.$transaction([
@@ -83,22 +84,19 @@ export async function POST(
                 },
                 update: {},
             }),
-            ...(loggedInUser.id !== post.userId ?
-                [
+            ...(loggedInUser.id !== post.userId
+                ? [
                     prisma.notification.create({
                         data: {
-                            issuerId: loggedInUser.id, 
+                            issuerId: loggedInUser.id,
                             recipientId: post.userId,
                             postId,
-                            type: "LIKE"
-                        }
-                    })
+                            type: "LIKE",
+                        },
+                    }),
                 ]
-                : []
-            )
-        ])
-
-
+                : []),
+        ]);
 
         return new Response();
     } catch (error) {
@@ -119,14 +117,14 @@ export async function DELETE(
         }
 
         const post = await prisma.post.findUnique({
-            where: {id: postId},
-            select:{
-                userId: true
-            }
-        })
+            where: { id: postId },
+            select: {
+                userId: true,
+            },
+        });
 
         if (!post) {
-            return Response.json({ error: "Post not found"}, {status: 404});
+            return Response.json({ error: "Post not found" }, { status: 404 });
         }
 
         await prisma.$transaction([
@@ -141,10 +139,10 @@ export async function DELETE(
                     issuerId: loggedInUser.id,
                     recipientId: post.userId,
                     postId,
-                    type: "LIKE"
-                }
-            })
-        ])
+                    type: "LIKE",
+                },
+            }),
+        ]);
 
         return new Response();
     } catch (error) {
