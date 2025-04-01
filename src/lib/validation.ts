@@ -20,9 +20,12 @@ export const loginSchema = z.object({
 
 export type LoginValues = z.infer<typeof loginSchema>;
 
+const postTypes = z.enum(["REGULAR", "SALE", "BANDMATE", "MUSIC"]);
+
 export const createPostSchema = z.object({
-    content: requiredString,
-    mediaIds: z.array(z.string()).max(5, "Cannot have more than 5 attachments"),
+  content: requiredString,
+  mediaIds: z.array(z.string()).max(5, "Cannot have more than 5 attachments"),
+  type: postTypes.default("REGULAR"),
 });
 
 export const updateUserProfileSchema = z.object({

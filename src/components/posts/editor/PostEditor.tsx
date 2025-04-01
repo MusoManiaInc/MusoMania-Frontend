@@ -10,16 +10,22 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { ImageIcon, Loader2, X } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useSubmitPostMutation } from "./mutations";
 import "./styles.css";
 import useMediaUpload, { Attachment } from "./useMediaUpload";
 
+// Define the available post types and their display labels.
+const postTypeOptions = [
+  { value: "REGULAR", label: "Regular" },
+  { value: "SALE", label: "For Sale" },
+  { value: "BANDMATE", label: "Looking for Bandmates" },
+  { value: "MUSIC", label: "New Music" },
+];
+
 export default function PostEditor() {
   const { user } = useSession();
-
   const mutation = useSubmitPostMutation();
-
   const {
     startUpload,
     attachments,
@@ -41,28 +47,35 @@ export default function PostEditor() {
     ],
   });
 
+  // Get text from the editor.
   const input =
     editor?.getText({
       blockSeparator: "\n",
     }) || "";
+
+  // State for the selected post type.
+  const [postType, setPostType] = useState("REGULAR");
 
   function onSubmit() {
     mutation.mutate(
       {
         content: input,
         mediaIds: attachments.map((a) => a.mediaId).filter(Boolean) as string[],
+        type: postType,
       },
       {
         onSuccess: () => {
           editor?.commands.clearContent();
           resetMediaUploads();
+          // Optionally reset post type to default
+          setPostType("REGULAR");
         },
       },
     );
   }
 
   return (
-    <div className="flex flex-col gap-5 bg-white p-5 ">
+    <div className="flex flex-col gap-5 bg-white p-5">
       <div className="flex gap-5">
         <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
         <EditorContent
@@ -70,6 +83,20 @@ export default function PostEditor() {
           className="max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3"
         />
       </div>
+
+      {/* Post type selection buttons */}
+      <div className="flex gap-2">
+        {postTypeOptions.map((option) => (
+          <Button
+            key={option.value}
+            variant={postType === option.value ? "default" : "outline"}
+            onClick={() => setPostType(option.value)}
+          >
+            {option.label}
+          </Button>
+        ))}
+      </div>
+
       {!!attachments.length && (
         <AttachmentPreviews
           attachments={attachments}
@@ -179,9 +206,7 @@ function AttachmentPreview({
   const src = URL.createObjectURL(file);
 
   return (
-    <div
-      className={cn("relative mx-auto size-fit", isUploading && "opacity-50")}
-    >
+    <div className={cn("relative mx-auto size-fit", isUploading && "opacity-50")}>
       {file.type.startsWith("image") ? (
         <Image
           src={src}

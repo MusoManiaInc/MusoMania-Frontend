@@ -3,7 +3,7 @@
 import { useSession } from "@/app/feed/SessionProvider";
 import { PostData } from "@/lib/types";
 import { cn, formatRelativeDate } from "@/lib/utils";
-import { Media } from "@prisma/client";
+import { Media, PostType } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import UserAvatar from "../UserAvatar";
@@ -14,6 +14,7 @@ import BookmarkButton from "./BookmarkButton";
 import { MessageSquare } from "lucide-react";
 import { useState } from "react";
 import Comments from "../comments/Comments";
+
 interface PostProps {
   post: PostData;
 }
@@ -23,7 +24,23 @@ export default function Post({ post }: PostProps) {
   const [showComments, setShowComments] = useState(false);
 
   return (
-    <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
+    <article className="relative group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
+      {post.type == PostType.SALE && (
+        <div className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+          For Sale
+        </div>
+      )}
+      {post.type == PostType.BANDMATE && (
+        <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+          Looking For Bandmates
+        </div>
+      )}
+      {post.type == PostType.MUSIC && (
+        <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+          New Music
+        </div>
+      )}
+
       <div className="flex justify-between gap-3">
         <div className="flex items-center justify-between w-full">
           <div className="flex flex-wrap gap-3 items-center">
@@ -47,14 +64,10 @@ export default function Post({ post }: PostProps) {
             </div>
           </div>
           <div>
-            {post.user.id !== user.id && (
-              <PostReportButton
-              post={post}
-            />
-            )}
+            {post.user.id !== user.id && <PostReportButton post={post} />}
           </div>
         </div>
-        
+
         {post.user.id === user.id && (
           <PostMoreButton
             post={post}
@@ -67,7 +80,7 @@ export default function Post({ post }: PostProps) {
         <MediaPreviews attachments={post.attachments} />
       )}
       <div className="flex items-center justify-between">
-        <div className="flex items-center  gap-5">
+        <div className="flex items-center gap-5">
           <LikeButton
             postId={post.id}
             initialState={{
@@ -88,11 +101,7 @@ export default function Post({ post }: PostProps) {
             ),
           }}
         />
-        
       </div>
-        
-      
-      
       {showComments && <Comments post={post} />}
     </article>
   );
@@ -148,10 +157,12 @@ function MediaPreview({ media }: MediaPreviewProps) {
 
   return <p className="text-destructive">Unsupported media type</p>;
 }
+
 interface CommentButtonProps {
   post: PostData;
   onClick: () => void;
 }
+
 function CommentButton({ post, onClick }: CommentButtonProps) {
   return (
     <button onClick={onClick} className="flex items-center gap-2">
