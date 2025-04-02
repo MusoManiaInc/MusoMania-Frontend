@@ -15,12 +15,25 @@ export async function GET(req: NextRequest) {
             return Response.json({ error: "Unauthorized" }, { status: 401 });
         }
 
+        const reportedPosts = await prisma.report.findMany({
+            where: { status: "Violation" },
+            select: { postId: true },
+          });
+
+        const reportedPostIds = reportedPosts.map(report => report.postId);
+
         const posts = await prisma.post.findMany({
+            where: {
+              id: {
+                notIn: reportedPostIds,
+              },
+            },
             include: getPostDataInclude(user.id),
             orderBy: { createdAt: "desc" },
             take: pageSize + 1,
             cursor: cursor ? { id: cursor } : undefined,
         });
+          
 
         const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
 

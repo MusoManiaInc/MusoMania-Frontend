@@ -52,6 +52,10 @@ export async function login(
             sessionCookie.attributes,
         );
 
+        if(username === "MusoManiaAdmin"){
+            return redirect("/admin/dashboard");
+        }
+
         // This will throw a redirect error which is handled by Next.js internally
         return redirect("/feed");
     } catch (error) {
