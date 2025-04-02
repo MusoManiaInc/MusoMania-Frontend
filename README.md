@@ -48,4 +48,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Live version
 
-The MusoMania web application is live and available at www.musomania.ca or by clicking [here](https://musomania-frontend.onrender.com).
+The MusoMania web application is live and available at https://musomania-frontend.onrender.com or by clicking [here](https://musomania-frontend.onrender.com).
